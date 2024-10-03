@@ -25,7 +25,7 @@
     <br />
     <br />
 
-    <p style="text-align: center;">{{ new Date().getFullYear() }} — <strong>Privat's Labs</strong></p>
+   <span style="text-align: center;">{{ new Date().getFullYear() }} — powered by </span> <nuxt-link to="https://portfolio-rust-chi-35.vercel.app/" style="text-align: center;"><strong>Privat's Labs</strong></nuxt-link>
 
     <br />
     <br />
@@ -87,5 +87,10 @@ footer {
   font-weight: 900;
   font-style: normal;
   text-decoration: none;
+}
+
+a{
+  color: grey;
+  text-align: center;
 }
 </style>

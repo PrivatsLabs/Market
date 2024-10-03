@@ -31,17 +31,16 @@
     <div class="center">
       <div class="livraison-box">
         <p>LIVRAISON</p>
-        <v-icon>mdi-pencil-outline</v-icon>
+        <!-- <v-icon>mdi-pencil-outline</v-icon> -->
 
-        <span class="body-1 font-weight-bold">{{userPrenom}} {{ userNom }}</span> <br />
-        <span class="text-body-2">{{userAddress}}</span> <br />
-        <span class="text-body-2">{{userPhone}}</span> <br />
-        <span class="text-body-2">{{userEmail}}</span>
-        <br />
+        <v-text-field label="Numero de telephone"></v-text-field>        
+        <v-text-field label="Ville"></v-text-field>        
+        <v-text-field label="Lieu de livraison"></v-text-field>        
         <br />
         <v-divider></v-divider>
         <br />
-        <span class="body-1 font-weight-bold">Livraison rapide et fiable</span>
+       
+<v-btn outlined block color="blue">Enregistrer </v-btn>       
       </div>
 
       <br />
@@ -49,7 +48,7 @@
 
       <div class="methode-box">
         <p>MODE DE PAIMENT</p>
-        <v-icon>mdi-pencil-outline</v-icon>
+        <!-- <v-icon>mdi-pencil-outline</v-icon> -->
 
         <div class="d-flex justify-space-between align-center">
           <span class="text-body-1 font-weight-bold">
@@ -96,7 +95,7 @@
 
       <v-divider></v-divider>
 
-      <p>{{ new Date().getFullYear() }} — <strong>Privat's Labs</strong></p>
+      <span style="text-align: center;">{{ new Date().getFullYear() }} — powered by </span> <nuxt-link to="https://portfolio-rust-chi-35.vercel.app/" style="text-align: center;"><strong>Privat's Labs</strong></nuxt-link>
     </v-footer>
   </div>
 </template>
