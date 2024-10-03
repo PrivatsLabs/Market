@@ -4,7 +4,7 @@
       <v-toolbar class="p-5" elevation="0">
         <v-app-bar-nav-icon @click="menuO"></v-app-bar-nav-icon>
 
-        <v-toolbar-title><nuxt-link to="/">LafyShop</nuxt-link></v-toolbar-title>
+        <v-toolbar-title><nuxt-link to="/"><span style="color: #008080; font-family: 'Playfair Display', serif;">Lafy</span><span style="color: #003366; font-family: 'Montserrat', sans-serif;">Shop</span></nuxt-link></v-toolbar-title>
 
         <v-spacer></v-spacer>
         <v-spacer></v-spacer>

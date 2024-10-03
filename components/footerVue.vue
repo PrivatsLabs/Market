@@ -2,7 +2,7 @@
   <footer>
     <v-divider></v-divider>
     <br> <br>
-    <v-toolbar-title>LafyShop</v-toolbar-title>
+    <v-toolbar-title><nuxt-link to="/" style="text-decoration: none;"><span style="color: #008080; font-family: 'Playfair Display', serif;">Lafy</span><span style="color: #003366; font-family: 'Montserrat', sans-serif;">Shop</span></nuxt-link></v-toolbar-title>
 
     <br />
     <br />
@@ -25,7 +25,7 @@
     <br />
     <br />
 
-   <span style="text-align: center;">{{ new Date().getFullYear() }} — powered by </span> <nuxt-link to="https://portfolio-rust-chi-35.vercel.app/" style="text-align: center;"><strong>Privat's Labs</strong></nuxt-link>
+   <span style="text-align: center;">© {{ new Date().getFullYear() }} — powered by </span> <a target="_blank" href="https://portfolio-rust-chi-35.vercel.app/" style="text-align: center;"><strong>Privat's Labs</strong></a>
 
     <br />
     <br />

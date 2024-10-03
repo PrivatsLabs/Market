@@ -1,7 +1,7 @@
 <template>
   <div class="panier">
     <v-app-bar class="elevation-0">
-      <v-toolbar-title><nuxt-link to="/">LafyShop</nuxt-link></v-toolbar-title>
+      <v-toolbar-title><nuxt-link to="/"><span style="color: #008080; font-family: 'Playfair Display', serif;">Lafy</span><span style="color: #003366; font-family: 'Montserrat', sans-serif;">Shop</span></nuxt-link></v-toolbar-title>
       <v-spacer></v-spacer>
       <span class="text-body-1 mr-3">Panier ({{ cartItemCount }} article<span v-show="cartItemCount > 1">s</span> )</span>
       <v-spacer></v-spacer>
@@ -133,6 +133,13 @@ export default {
 <style scoped>
 .v-toolbar {
   background-color: white !important;
+}
+.v-toolbar__title {
+  color: #5da44c;
+  font-family: "Rubik", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+  text-decoration: none;
 }
 .panier {
   position: fixed;

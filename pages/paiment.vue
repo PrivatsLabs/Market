@@ -3,7 +3,7 @@
     <div class="top">
       <v-icon @click="retour">mdi-arrow-left</v-icon>
 <v-spacer></v-spacer>
-      <nuxt-link to="/">LafyShop</nuxt-link>
+<v-toolbar-title><nuxt-link to="/"><span style="color: #008080; font-family: 'Playfair Display', serif;">Lafy</span><span style="color: #003366; font-family: 'Montserrat', sans-serif;">Shop</span></nuxt-link></v-toolbar-title>
 
       <v-spacer></v-spacer>
 
