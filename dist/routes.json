@@ -21,6 +21,13 @@
     "_name": "_36212808"
   },
   {
+    "name": "iphone",
+    "path": "/iphone",
+    "component": "C:\\\\Users\\\\Durand\\\\Desktop\\\\market\\\\pages\\\\iphone.vue",
+    "chunkName": "pages/iphone",
+    "_name": "_5d80e09a"
+  },
+  {
     "name": "montres",
     "path": "/montres",
     "component": "C:\\\\Users\\\\Durand\\\\Desktop\\\\market\\\\pages\\\\montres.vue",
@@ -40,6 +47,13 @@
     "component": "C:\\\\Users\\\\Durand\\\\Desktop\\\\market\\\\pages\\\\pc.vue",
     "chunkName": "pages/pc",
     "_name": "_0545f768"
+  },
+  {
+    "name": "samsung",
+    "path": "/samsung",
+    "component": "C:\\\\Users\\\\Durand\\\\Desktop\\\\market\\\\pages\\\\samsung.vue",
+    "chunkName": "pages/samsung",
+    "_name": "_467da156"
   },
   {
     "name": "settings",

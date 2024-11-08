@@ -16,14 +16,19 @@
     <br />
     <br />
 
+    <CategoriesVue />
+
+    <br />
+    <br />
+
     <p class="text-h4">Nos telephones</p>
 
     <br />
     <br />
 
-    <v-card class="mx-auto pa-5 rounded-xl" elevation="0" v-for="item in items" :key="item.id">
+    <v-card class="carte mx-auto pa-5 rounded-xl" elevation="0" v-for="item in items" :key="item.id">
       <router-link :to="'/details/'+ item.id">
-            <v-img :src="item.url" width="260px"></v-img>
+            <img class="img" :src="item.url" width="260px"></img>
           </router-link> 
 
       <v-card-title class="font-weight-bold">{{item.name}}</v-card-title>
@@ -54,14 +59,16 @@
 </template>
 
 <script>
-import { telephones } from '../utils/data';
+import CategoriesVue from '../components/categoriesVue.vue';
+import { telephones , categories } from '../utils/data';
 import { mapActions } from 'vuex';
 
 
 export default ({
     data() {
         return{
-            items: telephones
+            items: telephones,
+            categories: categories
         }
         
     },
@@ -86,13 +93,15 @@ body {
   padding: 15px;
 }
 
-.v-card{
+.carte{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
     background-color: white;
     border: 1px solid rgba(128, 128, 128, 0.345);
     margin-bottom: 20px;
 }
-.v-card .v-img{
-  margin-left: auto;
+.card .img{
   margin-right: auto;
 }
 

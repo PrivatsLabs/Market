@@ -7,9 +7,11 @@ import scrollBehavior from './router.scrollBehavior.js'
 const _255c6f7d = () => interopDefault(import('..\\pages\\accessoires.vue' /* webpackChunkName: "pages/accessoires" */))
 const _b24b3c38 = () => interopDefault(import('..\\pages\\connexion.vue' /* webpackChunkName: "pages/connexion" */))
 const _36212808 = () => interopDefault(import('..\\pages\\ecouteurs.vue' /* webpackChunkName: "pages/ecouteurs" */))
+const _5d80e09a = () => interopDefault(import('..\\pages\\iphone.vue' /* webpackChunkName: "pages/iphone" */))
 const _0a299513 = () => interopDefault(import('..\\pages\\montres.vue' /* webpackChunkName: "pages/montres" */))
 const _100dcb51 = () => interopDefault(import('..\\pages\\paiment.vue' /* webpackChunkName: "pages/paiment" */))
 const _0545f768 = () => interopDefault(import('..\\pages\\pc.vue' /* webpackChunkName: "pages/pc" */))
+const _467da156 = () => interopDefault(import('..\\pages\\samsung.vue' /* webpackChunkName: "pages/samsung" */))
 const _765b93d8 = () => interopDefault(import('..\\pages\\settings.vue' /* webpackChunkName: "pages/settings" */))
 const _77bd4cd2 = () => interopDefault(import('..\\pages\\tablettes.vue' /* webpackChunkName: "pages/tablettes" */))
 const _01322b64 = () => interopDefault(import('..\\pages\\telephones.vue' /* webpackChunkName: "pages/telephones" */))
@@ -40,6 +42,10 @@ export const routerOptions = {
     component: _36212808,
     name: "ecouteurs"
   }, {
+    path: "/iphone",
+    component: _5d80e09a,
+    name: "iphone"
+  }, {
     path: "/montres",
     component: _0a299513,
     name: "montres"
@@ -51,6 +57,10 @@ export const routerOptions = {
     path: "/pc",
     component: _0545f768,
     name: "pc"
+  }, {
+    path: "/samsung",
+    component: _467da156,
+    name: "samsung"
   }, {
     path: "/settings",
     component: _765b93d8,

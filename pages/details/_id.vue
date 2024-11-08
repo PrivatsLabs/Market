@@ -9,36 +9,36 @@
 
       <div class="img-box">
         <transition name="fade" @before-enter="beforeEnter" @enter="enter" @leave="leave">
-          <v-img
+          <img
             v-if="img === 'true'"
             :src="product.url"
-            height="auto"
+            style="height: 350px !important;"
             key="img1"
-          ></v-img>
+          ></img>
         </transition>
 
         <transition name="fade" @before-enter="beforeEnter" @enter="enter" @leave="leave">
-          <v-img
+          <img
             v-if="img_2 === 'true'"
             :src="product.url2"
-            height="auto"
+            style="height: 350px !important;"
             key="img2"
-          ></v-img>
+          ></img>
         </transition>
 
         <transition name="fade" @before-enter="beforeEnter" @enter="enter" @leave="leave">
-          <v-img
+          <img
             v-if="img_3 === 'true'"
             :src="product.url3"
-            height="auto"
+            style="height: 350px !important;"
             key="img3"
-          ></v-img>
+          ></img>
         </transition>
       </div>
 
       <div class="img-bottom">
         <div @click="img1">
-          <img :src="product.url" />
+          <img :src="product.url"/>
         </div>
         <div @click="img2">
           <img :src="product.url2" />
@@ -186,6 +186,8 @@ export default {
 .img-box #img_2 {
   position: absolute;
   z-index: 4;
+  height: 500px ;
+  width: auto;
 }
 .img-box #img_3 {
   position: absolute;
@@ -194,7 +196,7 @@ export default {
 
 .img-bottom {
   width: 100%;
-  margin-top: 10px;
+  margin-top: 15px;
   margin-bottom: 40px;
   display: flex;
   align-items: center;
@@ -205,7 +207,8 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: auto;
+  height: 105px;
+  width: 100px;
   margin: 5px;
   border: 1px solid rgba(225, 221, 221, 0.616);
   border-radius: 20px;
@@ -216,7 +219,7 @@ export default {
 }
 
 .img-bottom div img {
-  width: 100px;
+  width: auto;
   height: 100px;
   padding: 2px;
   border-radius: 20px;

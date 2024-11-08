@@ -11,6 +11,7 @@ You can directly use them in pages and other components without the need to impo
 - `<Affiche3Vue>` | `<affiche3-vue>` (components/affiche3Vue.vue)
 - `<Affiche4Vue>` | `<affiche4-vue>` (components/affiche4Vue.vue)
 - `<Affiche5Vue>` | `<affiche5-vue>` (components/affiche5Vue.vue)
+- `<CategoriesVue>` | `<categories-vue>` (components/categoriesVue.vue)
 - `<FooterVue>` | `<footer-vue>` (components/footerVue.vue)
 - `<MenuVue>` | `<menu-vue>` (components/menuVue.vue)
 - `<PanierVue>` | `<panier-vue>` (components/panierVue.vue)
