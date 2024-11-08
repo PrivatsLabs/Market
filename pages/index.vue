@@ -1,6 +1,17 @@
 <template>
   <div class="wrapper">
 
+    <div class="toast">
+      <div>
+        <img src="/no-results.png" alt="">
+        <h3 style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Ce site est conçu
+          uniquement pour les téléphones mobiles.</h3> <br>
+        <p>Vous pouvez accéder au site en utilisant votre smartphone pour une expérience parfaitement fonctionnelle.
+        </p>
+        <br> <br>
+        <img src="/page-not-found.png" width="200">
+      </div>
+    </div>
   <!-- <v-container class="top">
     <br> <br>
     <p>Promos d'ete</p>
@@ -138,6 +149,40 @@
   text-align: center;
   font-family: "Edu AU VIC WA NT Hand", cursive;
 
+}
+
+.toast{
+  display: none !important;
+}
+
+
+@media screen and (min-width: 624px) {
+
+  body {
+    display: none !important;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+
+
+
+  .toast {
+    display: block !important;
+    text-align: center;
+    /* Centre le texte */
+    padding: 20px;
+    /* Ajoute un peu d'espace autour du texte */
+    color: black;
+    position: fixed;
+    z-index: 100;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: white
+
+  }
 }
 
 

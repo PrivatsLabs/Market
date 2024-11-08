@@ -6,9 +6,7 @@
       <br>
       <br>
 
-    <h1 class="text-h5 text-center font-weight-bold">
-      Google pexels. Le telephones concu 100% par google.
-    </h1>
+    <h1 class="text-h5 text-center font-weight-bold">Découvrez notre vaste gamme de téléphones disponibles immédiatement après votre commande.</h1>
 
     <br />
     <br />
@@ -33,9 +31,9 @@
       <v-card-subtitle
         >{{item.details}}</v-card-subtitle
       >
-      <span class="body-text-2 text-decoration-line-through ml-3">{{item.last_prix}} £</span> <br>
+      <span class="body-text-2 text-decoration-line-through ml-3">{{item.last_prix}} CFA</span> <br>
       
-      <span class="body-text-1 font-weight-bold ml-3">{{item.prix}} £</span>
+      <span class="body-text-1 font-weight-bold ml-3">{{item.prix}} CFA</span>
 
       <br />
       <br />
@@ -89,7 +87,8 @@ body {
 }
 
 .v-card{
-    background-color: rgba(0, 170, 255, 0.055);
+    background-color: white;
+    border: 1px solid rgba(128, 128, 128, 0.345);
     margin-bottom: 20px;
 }
 .v-card .v-img{

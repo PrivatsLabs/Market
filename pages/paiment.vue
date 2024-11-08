@@ -33,7 +33,7 @@
         <p>LIVRAISON</p>
         <!-- <v-icon>mdi-pencil-outline</v-icon> -->
 
-        <v-text-field label="Numero de telephone"></v-text-field>        
+        <v-text-field label="Numéro de telephone"></v-text-field>        
         <v-text-field label="Ville"></v-text-field>        
         <v-text-field label="Lieu de livraison"></v-text-field>        
         <br />
@@ -47,12 +47,12 @@
       <br />
 
       <div class="methode-box">
-        <p>MODE DE PAIMENT</p>
+        <p>MODE DE PAIEMENT</p>
         <!-- <v-icon>mdi-pencil-outline</v-icon> -->
 
         <div class="d-flex justify-space-between align-center">
           <span class="text-body-1 font-weight-bold">
-            Paiemant a la livraison - mains a mains
+            Paiement a la livraison - main a main
           </span>
         </div>
       </div>

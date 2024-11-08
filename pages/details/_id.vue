@@ -5,7 +5,7 @@
     <br />
     <div v-if="product">
       <p class="text-h5 font-weight-bold">{{ product.name }}</p>
-      <p class="text-body-1">À partir de {{ product.prix }} £</p>
+      <p class="text-body-1">À partir de {{ product.prix }} CFA</p>
 
       <div class="img-box">
         <transition name="fade" @before-enter="beforeEnter" @enter="enter" @leave="leave">
@@ -173,7 +173,8 @@ export default {
   justify-content: center;
   height: 400px;
   padding: 5px;
-  background-color: #f8f9fa;
+  background-color: white;
+  border: 1px solid rgba(128, 128, 128, 0.47);
   border-radius: 30px;
   position: relative;
 }
@@ -204,7 +205,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100px;
+  height: auto;
   margin: 5px;
   border: 1px solid rgba(225, 221, 221, 0.616);
   border-radius: 20px;
@@ -216,6 +217,10 @@ export default {
 
 .img-bottom div img {
   width: 100px;
+  height: 100px;
+  padding: 2px;
+  border-radius: 20px;
+
 }
 
 svg {

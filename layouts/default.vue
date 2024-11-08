@@ -1,10 +1,13 @@
 <template>
   <v-app>
+    
     <div>
       <v-toolbar class="p-5" elevation="0">
         <v-app-bar-nav-icon @click="menuO"></v-app-bar-nav-icon>
 
-        <v-toolbar-title><nuxt-link to="/"><span style="color: #008080; font-family: 'Playfair Display', serif;">Lafy</span><span style="color: #003366; font-family: 'Montserrat', sans-serif;">Shop</span></nuxt-link></v-toolbar-title>
+        <v-toolbar-title><nuxt-link to="/"><span
+              style="color: #008080; font-family: 'Playfair Display', serif;">Lafy</span><span
+              style="color: #003366; font-family: 'Montserrat', sans-serif;">Shop</span></nuxt-link></v-toolbar-title>
 
         <v-spacer></v-spacer>
         <v-spacer></v-spacer>
@@ -15,11 +18,7 @@
 
           <v-spacer v-if="cartItemCount > 0"></v-spacer>
 
-          <v-badge
-            v-if="cartItemCount > 0"
-            color="info"
-            :content="cartItemCount"
-          >
+          <v-badge v-if="cartItemCount > 0" color="info" :content="cartItemCount">
             <v-icon @click="toggleCart">mdi-cart</v-icon>
           </v-badge>
 
@@ -121,7 +120,7 @@ export default {
       toggleCart: "toggleCart",
     }),
     ...mapActions(["loadCart"]),
-   
+
     search() {
       document.querySelector(".search").style.height = "97%";
       document.querySelector(".mdi-close-box-outline").style.display = "block";
@@ -174,6 +173,6 @@ body {
 .left {
   width: 100px;
 }
+
+
 </style>
-
-
