@@ -1,0 +1,92 @@
+[
+  {
+    "name": "accessoires",
+    "path": "/accessoires",
+    "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\accessoires.vue",
+    "chunkName": "pages/accessoires"
+  },
+  {
+    "name": "connexion",
+    "path": "/connexion",
+    "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\connexion.vue",
+    "chunkName": "pages/connexion"
+  },
+  {
+    "name": "ecouteurs",
+    "path": "/ecouteurs",
+    "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\ecouteurs.vue",
+    "chunkName": "pages/ecouteurs"
+  },
+  {
+    "name": "iphone",
+    "path": "/iphone",
+    "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\iphone.vue",
+    "chunkName": "pages/iphone"
+  },
+  {
+    "name": "montres",
+    "path": "/montres",
+    "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\montres.vue",
+    "chunkName": "pages/montres"
+  },
+  {
+    "name": "paiment",
+    "path": "/paiment",
+    "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\paiment.vue",
+    "chunkName": "pages/paiment"
+  },
+  {
+    "name": "pc",
+    "path": "/pc",
+    "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\pc.vue",
+    "chunkName": "pages/pc"
+  },
+  {
+    "name": "redmi",
+    "path": "/redmi",
+    "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\redmi.vue",
+    "chunkName": "pages/redmi"
+  },
+  {
+    "name": "samsung",
+    "path": "/samsung",
+    "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\samsung.vue",
+    "chunkName": "pages/samsung"
+  },
+  {
+    "name": "settings",
+    "path": "/settings",
+    "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\settings.vue",
+    "chunkName": "pages/settings"
+  },
+  {
+    "name": "tablettes",
+    "path": "/tablettes",
+    "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\tablettes.vue",
+    "chunkName": "pages/tablettes"
+  },
+  {
+    "name": "telephones",
+    "path": "/telephones",
+    "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\telephones.vue",
+    "chunkName": "pages/telephones"
+  },
+  {
+    "name": "ticket",
+    "path": "/ticket",
+    "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\ticket.vue",
+    "chunkName": "pages/ticket"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\index.vue",
+    "chunkName": "pages/index"
+  },
+  {
+    "name": "details-id",
+    "path": "/details/:id?",
+    "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\details\\\\_id.vue",
+    "chunkName": "pages/details/_id"
+  }
+]
