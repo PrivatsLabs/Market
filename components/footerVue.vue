@@ -9,7 +9,7 @@
     <br />
     <br />
 
-    <span>Centre d'aide</span> <br />
+    <nuxt-link to="/aide">Centre d'aide</nuxt-link> <br />
     <br />
     <span>Nous contacter</span> <br />
     <br />

@@ -5,6 +5,7 @@ import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
 const _7700dd0c = () => interopDefault(import('..\\pages\\accessoires.vue' /* webpackChunkName: "pages/accessoires" */))
+const _ebb261a2 = () => interopDefault(import('..\\pages\\aide.vue' /* webpackChunkName: "pages/aide" */))
 const _228ae733 = () => interopDefault(import('..\\pages\\connexion.vue' /* webpackChunkName: "pages/connexion" */))
 const _609ff14b = () => interopDefault(import('..\\pages\\ecouteurs.vue' /* webpackChunkName: "pages/ecouteurs" */))
 const _6883f5ab = () => interopDefault(import('..\\pages\\iphone.vue' /* webpackChunkName: "pages/iphone" */))
@@ -35,6 +36,10 @@ export const routerOptions = {
     path: "/accessoires",
     component: _7700dd0c,
     name: "accessoires"
+  }, {
+    path: "/aide",
+    component: _ebb261a2,
+    name: "aide"
   }, {
     path: "/connexion",
     component: _228ae733,

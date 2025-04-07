@@ -1,6 +1,6 @@
 <template>
   <div class="menu">
-    <v-icon @click="close">mdi-close</v-icon> <br> 
+    <v-icon @click="close">mdi-close</v-icon> <br>
 <v-divider></v-divider>
     <div @click="home" large confortable text class="box pa-3">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>      <span>Accueil</span>
@@ -22,7 +22,7 @@
     </div>
     <v-divider></v-divider>
 
-    <div @click="ecouteurs" large confortable text class="box pa-3">
+    <!-- <div @click="ecouteurs" large confortable text class="box pa-3">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-headphones"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></svg>
       <span>Ecouteurs</span>
       <v-spacer></v-spacer>
@@ -30,8 +30,8 @@
       <v-spacer></v-spacer>
       <svg style="margin: 0%;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg>
 
-    </div>
-    <v-divider></v-divider>
+    </div> -->
+    <!-- <v-divider></v-divider>
 
     <div @click="montres" large confortable text class="box pa-3">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-watch"><circle cx="12" cy="12" r="6"/><polyline points="12 10 12 12 13 13"/><path d="m16.13 7.66-.81-4.05a2 2 0 0 0-2-1.61h-2.68a2 2 0 0 0-2 1.61l-.78 4.05"/><path d="m7.88 16.36.8 4a2 2 0 0 0 2 1.61h2.72a2 2 0 0 0 2-1.61l.81-4.05"/></svg>      <span>Montres</span>
@@ -41,9 +41,9 @@
       <svg style="margin: 0%;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg>
 
     </div>
-    <v-divider></v-divider>
+    <v-divider></v-divider> -->
 
-    <div @click="tools" large confortable text class="box pa-3">
+    <!-- <div @click="tools" large confortable text class="box pa-3">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cable"><path d="M17 21v-2a1 1 0 0 1-1-1v-1a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1a1 1 0 0 1-1 1"/><path d="M19 15V6.5a1 1 0 0 0-7 0v11a1 1 0 0 1-7 0V9"/><path d="M21 21v-2h-4"/><path d="M3 5h4V3"/><path d="M7 5a1 1 0 0 1 1 1v1a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a1 1 0 0 1 1-1V3"/></svg>
       <span>Accessoires</span>
       <v-spacer></v-spacer>
@@ -52,7 +52,7 @@
       <svg style="margin: 0%;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg>
 
     </div>
-    <v-divider></v-divider>
+    <v-divider></v-divider> -->
 
     <!-- <v-btn @click="tablettes" large confortable text class="box pa-5">
       <img
@@ -78,7 +78,7 @@
 
     <v-spacer></v-spacer>
 
-   
+
     <v-btn large confortable text class="box pa-5" style="margin-top: auto !important; margin-bottom: 50px;">
       <v-icon>mdi-help-circle</v-icon>
       <span>Aide</span>

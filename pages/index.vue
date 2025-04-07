@@ -87,19 +87,19 @@
 
   <br> <br> <br>
 
-  <h2>Nos ordinateurs.</h2>
+  <!-- <h2>Nos ordinateurs.</h2>
 
 
   <SliderPcVue />
 
-  <br> <br> <br>
+  <br> <br> <br> -->
 
-  <h2>Nos montres.</h2>
+  <!-- <h2>Nos montres.</h2>
 
 
   <SliderMontreVue />
 
-  <br> <br> <br>
+  <br> <br> <br> -->
 
   <!-- affiche 5 -->
    <Affiche5Vue></Affiche5Vue>
