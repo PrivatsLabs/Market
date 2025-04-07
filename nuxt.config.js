@@ -129,4 +129,19 @@ export default {
   },
   buildDir: 'dist', // Indique à Nuxt.js d'utiliser le dossier 'dist' pour les fichiers buildés
 
+  publicRuntimeConfig: {
+    TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN,
+    TELEGRAM_CHAT_ID: process.env.TELEGRAM_CHAT_ID,
+  },
+
+  env: {
+    TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN,
+    TELEGRAM_CHAT_ID: process.env.TELEGRAM_CHAT_ID,
+  },
+
+  render: {
+    static: {
+      cacheControl: false
+    }
+  },
 }

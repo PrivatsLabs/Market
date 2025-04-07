@@ -7,7 +7,6 @@
           <img src="/logo.png" width="100" alt="Logo" />
         </nuxt-link>
         <v-spacer></v-spacer>
-
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <svg style="height: 30px; width: 30;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -15,10 +14,7 @@
         <path stroke-linecap="round" stroke-linejoin="round"
           d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
       </svg>
-
-
     </div>
-
 
     <br /><br />
 
@@ -48,12 +44,12 @@
       <div v-else class="livraison-box" style="position: relative;">
         <p>DÉTAILS DE LIVRAISON</p> <br>
         <ul>
-          <li><strong>Nom complet : </strong>{{ form.nom }}</li> <br>
-          <li><strong>Téléphone : </strong>{{ form.telephone }}</li> <br>
-          <li><strong>Ville : </strong>{{ form.ville }}</li> <br>
-          <li><strong>Adresse : </strong>{{ form.adresse }}</li> <br>
+          <li><strong>Nom complet :</strong> {{ form.nom }}</li>
+          <li><strong>Téléphone :</strong> {{ form.telephone }}</li>
+          <li><strong>Ville :</strong> {{ form.ville }}</li>
+          <li><strong>Adresse :</strong> {{ form.adresse }}</li>
         </ul>
-        <v-icon size="40" color="info" @click="modifier" style="position: absolute ; right: 10px">mdi-note-edit</v-icon>
+        <v-icon size="40" color="info" @click="modifier" style="position: absolute; right: 10px">mdi-note-edit</v-icon>
       </div>
 
       <br /><br />
@@ -78,7 +74,7 @@
         <v-list>
           <v-list-item v-for="item in cartItems" :key="item.id">
             <v-list-item-content>
-              <v-list-item-title>{{ item.name }} x <strong>{{ item.quantity }}</strong> </v-list-item-title>
+              <v-list-item-title>{{ item.name }} x <strong>{{ item.quantity }}</strong></v-list-item-title>
               <v-list-item-subtitle>{{ item.prix }} FCFA</v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>
@@ -91,7 +87,7 @@
       </div>
 
       <br /><br />
-      <v-btn large block color="primary">Confirmer l'achat</v-btn>
+      <v-btn large block color="primary" @click="envoyerMessageTelegram">Confirmer l'achat</v-btn>
     </div>
 
     <br /><br /><br /><br />
@@ -115,14 +111,14 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import { db } from "@/firebase"; // Assurez-vous que Firebase est configuré dans ce fichier
-import { collection, addDoc, getDoc, doc, setDoc } from "firebase/firestore";
+import { db } from "@/firebase";
+import { collection, addDoc, getDoc, doc } from "firebase/firestore";
 
 export default {
   middleware: 'auth',
   data() {
     return {
-      showForm: true, // Variable pour contrôler la vue
+      showForm: true,
       form: {
         nom: "",
         telephone: "",
@@ -132,24 +128,18 @@ export default {
       rules: {
         required: (value) => !!value || "Ce champ est requis.",
         minLength: (min) => (value) =>
-          (value && value.length >= min) ||
-          `Minimum ${min} caractères requis.`,
+          (value && value.length >= min) || `Minimum ${min} caractères requis.`,
         maxLength: (max) => (value) =>
-          (value && value.length <= max) ||
-          `Maximum ${max} caractères autorisés.`,
+          (value && value.length <= max) || `Maximum ${max} caractères autorisés.`,
         phone: (value) =>
-          /^[0-9]{8,18}$/.test(value) ||
-          "Le numéro doit etre valide.",
+          /^[0-9]{8,18}$/.test(value) || "Le numéro doit être valide.",
       },
-      documentName: null, // Variable pour stocker le nom du document
     };
   },
   created() {
-    // Récupérer le nom du document depuis le localStorage
-    const savedDocumentName = localStorage.getItem("livraisonDocName");
-    if (savedDocumentName) {
-      this.documentName = savedDocumentName;
-      this.fetchLivraisonDetails();
+    const docId = localStorage.getItem("livraisonDocId");
+    if (docId) {
+      this.fetchLivraisonDetails(docId);
     }
   },
   computed: {
@@ -157,57 +147,33 @@ export default {
   },
   methods: {
     ...mapActions(["removeFromCart"]),
-    retour() {
-      window.history.back();
-    },
     async enregistrer() {
-      if (
-        !this.form.nom ||
-        !this.form.telephone ||
-        !this.form.ville ||
-        !this.form.adresse
-      ) {
+      if (!this.form.nom || !this.form.telephone || !this.form.ville || !this.form.adresse) {
         alert("Tous les champs sont obligatoires !");
         return;
       }
 
       try {
-  // Envoi des données vers Firestore et récupération de la référence du document
-  const docRef = await addDoc(collection(db, "livraisons"), {
-    nom: this.form.nom,
-    telephone: this.form.telephone,
-    ville: this.form.ville,
-    adresse: this.form.adresse,
-    timestamp: new Date(),
-  });
+        const docRef = await addDoc(collection(db, "livraisons"), {
+          nom: this.form.nom,
+          telephone: this.form.telephone,
+          ville: this.form.ville,
+          adresse: this.form.adresse,
+          timestamp: new Date(),
+        });
 
-  // Récupération de l'ID du document généré
-  const docId = docRef.id;
-
-  // Stockage de l'ID dans le localStorage
-  localStorage.setItem("livraisonDocId", docId);
-
-  alert("Détails de livraison enregistrés avec succès !");
-  this.showForm = false;
-} catch (error) {
-  console.error("Erreur lors de l'enregistrement :", error);
-  alert("Une erreur est survenue lors de l'enregistrement.");
-}
-
+        const docId = docRef.id;
+        localStorage.setItem("livraisonDocId", docId);
+        console.log("Détails de livraison enregistrés avec succès !");
+        this.showForm = false;
+      } catch (error) {
+        console.error("Erreur lors de l'enregistrement :", error);
+        console.log("Une erreur est survenue lors de l'enregistrement.");
+      }
     },
-    async fetchLivraisonDetails() {
+    async fetchLivraisonDetails(docId) {
       try {
-        // Récupérer l'ID du document depuis le localStorage
-        const docId = localStorage.getItem("livraisonDocId");
-        if (!docId) {
-          console.error("Aucun ID de document trouvé dans le localStorage.");
-          return;
-        }
-
-        // Créer une référence au document spécifique
         const docRef = doc(db, "livraisons", docId);
-
-        // Récupérer les détails de livraison depuis Firestore
         const docSnapshot = await getDoc(docRef);
 
         if (docSnapshot.exists()) {
@@ -225,14 +191,68 @@ export default {
         console.error("Erreur lors de la récupération des détails :", error);
       }
     },
+    async envoyerMessageTelegram() {
+      const botToken = process.env.TELEGRAM_BOT_TOKEN || "default_bot_token";
+      const chatId = process.env.TELEGRAM_CHAT_ID || "default_chat_id";
+
+      console.log("Debugging Telegram Config:", { botToken, chatId });
+      if (botToken === "default_bot_token" || chatId === "default_chat_id") {
+        console.error(
+          "Les variables d'environnement par défaut sont utilisées. Assurez-vous que le fichier .env est correctement configuré et que les variables TELEGRAM_BOT_TOKEN et TELEGRAM_CHAT_ID sont définies."
+        );
+        console.log(
+          "Erreur de configuration : les identifiants Telegram sont manquants ou incorrects. Veuillez vérifier votre fichier .env."
+        );
+        return;
+      }
+
+      const message = `
+🛍️ *Nouvelle commande reçue !*
+
+👤 *Nom complet* : ${this.form.nom}
+📞 *Téléphone* : ${this.form.telephone}
+📍 *Ville* : ${this.form.ville}
+🏠 *Adresse* : ${this.form.adresse}
+
+🛒 *Détails du panier* :
+${this.cartItems.map(item => `  • ${item.name} x${item.quantity} — ${item.prix} FCFA`).join("\n")}
+
+✅ Merci pour votre commande !
+`;
+
+      try {
+        const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chat_id: chatId,
+            text: message,
+            parse_mode: "Markdown",
+          }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error("Erreur lors de l'envoi du message Telegram :", errorData);
+          console.log(`Erreur Telegram : ${errorData.description || "Une erreur est survenue."}`);
+          return;
+        }
+
+        console.log("Commande envoyée avec succès !");
+        this.$router.push("/ticket");
+        localStorage.removeItem("cart");
+        this.$store.commit("clearCart");
+      } catch (error) {
+        console.error("Erreur lors de l'envoi du message Telegram :", error);
+        console.log("Une erreur réseau est survenue lors de l'envoi de la commande.");
+      }
+    },
     modifier() {
-      // Revenir à la vue du formulaire
       this.showForm = true;
     },
   },
 };
 </script>
-
 
 <style scoped>
 * {
@@ -263,105 +283,24 @@ export default {
   left: 0;
   width: 100%;
   background-color: white;
-
-}
-
-.top a {
-  color: #5da44c;
-  font-family: "Rubik", sans-serif;
-  font-weight: 900;
-  font-style: normal;
-  text-decoration: none;
-}
-
-.top .v-title {
-  font-weight: bolder;
-  font-size: 1.2rem;
 }
 
 .center {
   padding: 15px;
 }
 
-.center .livraison-box {
-  position: relative;
+.livraison-box {
   border: 1px solid rgba(128, 128, 128, 0.392);
   border-radius: 10px;
-  height: auto;
-  width: 100%;
   padding: 20px 15px 10px 15px;
   color: grey;
 }
 
-.livraison-box p {
-  position: absolute;
-  top: -10px;
-  left: 20px;
-  z-index: 2;
-  background-color: white;
-}
-
-.livraison-box .v-icon {
-  position: absolute;
-  top: -14px;
-  left: 270px;
-  z-index: 2;
-  background-color: white;
-}
-
-.center .methode-box {
-  position: relative;
+.methode-box,
+.panier-box {
   border: 1px solid rgba(128, 128, 128, 0.392);
   border-radius: 10px;
-  height: auto;
   padding: 20px 15px 10px 15px;
-  color: grey;
-}
-
-.methode-box p {
-  position: absolute;
-  top: -10px;
-  left: 20px;
-  z-index: 2;
-  background-color: white;
-}
-
-.methode-box .v-icon {
-  position: absolute;
-  top: -14px;
-  left: 270px;
-  z-index: 2;
-  background-color: white;
-}
-
-select {
-  font-size: 1.2rem;
-  font-weight: bolder;
-}
-
-select:focus {
-  outline: none;
-}
-
-.center .panier-box {
-  position: relative;
-  border: 1px solid rgba(128, 128, 128, 0.392);
-  border-radius: 10px;
-  height: auto;
-  padding: 20px 15px 10px 15px;
-  color: grey;
-}
-
-.panier-box p {
-  position: absolute;
-  top: -10px;
-  left: 20px;
-  z-index: 2;
-  background-color: white;
-}
-
-.methode-box svg {
-  height: 30px;
   color: grey;
 }
 </style>

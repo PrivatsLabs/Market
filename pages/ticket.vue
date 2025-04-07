@@ -156,6 +156,7 @@
 <script>
 
 export default ({
+  middleware: 'auth',
 
     methods: {
       vider(){
