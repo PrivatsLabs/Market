@@ -2,8 +2,15 @@ import Vue from "vue";
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 
-Vue.use(Toast, {
-  // Options de configuration (facultatif)
-  timeout: 5000,
-  position: "top-right",
-});
+export default ({ app }, inject) => {
+  if (process.client) {
+    Vue.use(Toast, {
+      // Options de configuration (facultatif)
+      timeout: 4000,
+      position: "top-right",
+    });
+
+    // Injecter $toast pour l'utiliser dans l'application
+    inject("toast", Vue.$toast);
+  }
+};

@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-// import * as auth from './auth';  
 
 Vue.use(Vuex);
 
@@ -22,7 +21,7 @@ const store = () => new Vuex.Store({
     addToCart(state, product) {
       const item = state.cart.find(item => item.id === product.id);
       if (item) {
-        return alert("Déjà ajouté au panier");
+        alert("Déjà ajouté au panier"); // Retour à une alerte simple
       } else {
         state.cart.push({ ...product });
         localStorage.setItem('cart', JSON.stringify(state.cart));

@@ -77,6 +77,14 @@
       </div>
 
       <div v-else class="livraison-box" style="position: relative">
+        <v-btn
+          outlined
+          small
+          color="info"
+          @click="modifier"
+          style="position: absolute; right: 10px; top: 5px"
+          >Modifier</v-btn>
+        <br />
         <p>DÉTAILS DE LIVRAISON</p>
         <br />
         <ul>
@@ -85,13 +93,6 @@
           <li><strong>Ville :</strong> {{ form.ville }}</li>
           <li><strong>Adresse :</strong> {{ form.adresse }}</li>
         </ul>
-        <v-icon
-          size="40"
-          color="info"
-          @click="modifier"
-          style="position: absolute; right: 10px"
-          >mdi-note-edit</v-icon
-        >
       </div>
 
       <br /><br />
@@ -268,7 +269,9 @@ export default {
         !this.form.ville?.trim() ||
         !this.form.adresse?.trim()
       ) {
-        this.$toast.error("Veuillez remplir tous les champs de livraison avant de confirmer l'achat.");
+        this.$toast.error(
+          "Veuillez remplir tous les champs de livraison avant de confirmer l'achat."
+        );
         return;
       }
 
@@ -280,7 +283,9 @@ export default {
         console.error(
           "Les variables d'environnement par défaut sont utilisées. Assurez-vous que le fichier .env est correctement configuré et que les variables TELEGRAM_BOT_TOKEN et TELEGRAM_CHAT_ID sont définies."
         );
-        this.$toast.error("Erreur de configuration : les identifiants Telegram sont manquants ou incorrects.");
+        this.$toast.error(
+          "Erreur de configuration : les identifiants Telegram sont manquants ou incorrects."
+        );
         return;
       }
 
@@ -316,8 +321,15 @@ ${this.cartItems
 
         if (!response.ok) {
           const errorData = await response.json();
-          console.error("Erreur lors de l'envoi du message Telegram :", errorData);
-          this.$toast.error(`Erreur Telegram : ${errorData.description || "Une erreur est survenue."}`);
+          console.error(
+            "Erreur lors de l'envoi du message Telegram :",
+            errorData
+          );
+          this.$toast.error(
+            `Erreur Telegram : ${
+              errorData.description || "Une erreur est survenue."
+            }`
+          );
           return;
         }
 
@@ -328,7 +340,9 @@ ${this.cartItems
         this.$store.commit("clearCart");
       } catch (error) {
         console.error("Erreur lors de l'envoi du message Telegram :", error);
-        this.$toast.error("Une erreur réseau est survenue lors de l'envoi de la commande.");
+        this.$toast.error(
+          "Une erreur réseau est survenue lors de l'envoi de la commande."
+        );
       }
     },
     modifier() {
