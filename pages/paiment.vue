@@ -9,10 +9,20 @@
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <svg style="height: 30px; width: 30;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-        stroke-width="1.5" stroke="currentColor" class="size-6">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+      <svg
+        style="height: 30px; width: 30"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="size-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+        />
       </svg>
     </div>
 
@@ -21,19 +31,44 @@
     <div class="center">
       <p class="text-h5 font-weight-medium text-center">Paiement</p>
       <v-divider></v-divider>
-      <br>
+      <br />
       <!-- Section Livraison -->
       <div v-if="showForm" class="livraison-box">
         <p>LIVRAISON</p>
         <form @submit.prevent="enregistrer">
-          <v-text-field v-model="form.nom" label="Nom complet"
-            :rules="[rules.required, rules.minLength(5), rules.maxLength(40)]" required clearable></v-text-field>
-          <v-text-field v-model="form.telephone" label="Numéro de téléphone" type="tel"
-            placeholder="(Exemple: +226 xx xx xx xx)" :rules="[rules.required, rules.phone]" required
-            clearable></v-text-field>
-          <v-text-field v-model="form.ville" label="Ville" :rules="[rules.required]" clearable></v-text-field>
-          <v-text-field v-model="form.adresse" label="Lieu de livraison" :rules="[rules.required]"
-            clearable></v-text-field>
+          <v-text-field
+            v-model="form.nom"
+            label="Nom complet"
+            :rules="[rules.required, rules.minLength(5), rules.maxLength(40)]"
+            required
+            id="nom"
+            clearable
+          ></v-text-field>
+          <v-text-field
+            v-model="form.telephone"
+            id="tel"
+            label="Numéro de téléphone"
+            type="tel"
+            placeholder="(Exemple: +226 xx xx xx xx)"
+            :rules="[rules.required, rules.phone]"
+            required
+            clearable
+          ></v-text-field>
+          <v-text-field
+            v-model="form.ville"
+            id="ville"
+            label="Ville"
+            :rules="[rules.required]"
+            clearable
+          ></v-text-field>
+          <v-text-field
+            v-model="form.adresse"
+            id="adresse"
+            type="text"
+            label="Lieu de livraison"
+            :rules="[rules.required]"
+            clearable
+          ></v-text-field>
           <br />
           <v-divider></v-divider>
           <br />
@@ -41,15 +76,22 @@
         </form>
       </div>
 
-      <div v-else class="livraison-box" style="position: relative;">
-        <p>DÉTAILS DE LIVRAISON</p> <br>
+      <div v-else class="livraison-box" style="position: relative">
+        <p>DÉTAILS DE LIVRAISON</p>
+        <br />
         <ul>
           <li><strong>Nom complet :</strong> {{ form.nom }}</li>
           <li><strong>Téléphone :</strong> {{ form.telephone }}</li>
           <li><strong>Ville :</strong> {{ form.ville }}</li>
           <li><strong>Adresse :</strong> {{ form.adresse }}</li>
         </ul>
-        <v-icon size="40" color="info" @click="modifier" style="position: absolute; right: 10px">mdi-note-edit</v-icon>
+        <v-icon
+          size="40"
+          color="info"
+          @click="modifier"
+          style="position: absolute; right: 10px"
+          >mdi-note-edit</v-icon
+        >
       </div>
 
       <br /><br />
@@ -59,9 +101,18 @@
         <p>MODE DE PAIEMENT</p>
         <div class="d-flex justify-space-between align-center">
           <v-radio-group>
-            <v-radio label="A la livraison - main à main" value="A la livraison - main à main"></v-radio>
-            <v-radio label="Par carte bancaire" value="Par carte bancaire"></v-radio>
-            <v-radio label="Via Mobile money" value="Via Mobile money"></v-radio>
+            <v-radio
+              label="A la livraison - main à main"
+              value="A la livraison - main à main"
+            ></v-radio>
+            <v-radio
+              label="Par carte bancaire"
+              value="Par carte bancaire"
+            ></v-radio>
+            <v-radio
+              label="Via Mobile money"
+              value="Via Mobile money"
+            ></v-radio>
           </v-radio-group>
         </div>
       </div>
@@ -74,7 +125,10 @@
         <v-list>
           <v-list-item v-for="item in cartItems" :key="item.id">
             <v-list-item-content>
-              <v-list-item-title>{{ item.name }} x <strong>{{ item.quantity }}</strong></v-list-item-title>
+              <v-list-item-title
+                >{{ item.name }} x
+                <strong>{{ item.quantity }}</strong></v-list-item-title
+              >
               <v-list-item-subtitle>{{ item.prix }} FCFA</v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>
@@ -87,7 +141,9 @@
       </div>
 
       <br /><br />
-      <v-btn large block color="primary" @click="envoyerMessageTelegram">Confirmer l'achat</v-btn>
+      <v-btn large block color="primary" @click="envoyerMessageTelegram"
+        >Confirmer l'achat</v-btn
+      >
     </div>
 
     <br /><br /><br /><br />
@@ -95,14 +151,18 @@
     <!-- Footer -->
     <v-footer class="bg-indigo-lighten-1 text-center d-flex flex-column">
       <div class="pt-0">
-        Engagement de LafyShop inc pour la protection de la vie privée Conditions
-        de vente Conditions d'utilisation Caractéristiques environnementales des
-        produits.
+        Engagement de LafyShop inc pour la protection de la vie privée
+        Conditions de vente Conditions d'utilisation Caractéristiques
+        environnementales des produits.
       </div>
       <br /><br />
       <v-divider></v-divider>
       <span>{{ new Date().getFullYear() }} — powered by</span>
-      <a target="_blank" href="https://portfolio-rust-chi-35.vercel.app/" class="font-weight-bold">
+      <a
+        target="_blank"
+        href="https://portfolio-rust-chi-35.vercel.app/"
+        class="font-weight-bold"
+      >
         Privat's Labs
       </a>
     </v-footer>
@@ -113,9 +173,11 @@
 import { mapGetters, mapActions } from "vuex";
 import { db } from "@/firebase";
 import { collection, addDoc, getDoc, doc } from "firebase/firestore";
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
 
 export default {
-  middleware: 'auth',
+  middleware: "auth",
   data() {
     return {
       showForm: true,
@@ -130,7 +192,8 @@ export default {
         minLength: (min) => (value) =>
           (value && value.length >= min) || `Minimum ${min} caractères requis.`,
         maxLength: (max) => (value) =>
-          (value && value.length <= max) || `Maximum ${max} caractères autorisés.`,
+          (value && value.length <= max) ||
+          `Maximum ${max} caractères autorisés.`,
         phone: (value) =>
           /^[0-9]{8,18}$/.test(value) || "Le numéro doit être valide.",
       },
@@ -148,8 +211,13 @@ export default {
   methods: {
     ...mapActions(["removeFromCart"]),
     async enregistrer() {
-      if (!this.form.nom || !this.form.telephone || !this.form.ville || !this.form.adresse) {
-        alert("Tous les champs sont obligatoires !");
+      if (
+        !this.form.nom ||
+        !this.form.telephone ||
+        !this.form.ville ||
+        !this.form.adresse
+      ) {
+        this.$toast.error("Veuillez remplir tous les champs de livraison.");
         return;
       }
 
@@ -166,9 +234,10 @@ export default {
         localStorage.setItem("livraisonDocId", docId);
         console.log("Détails de livraison enregistrés avec succès !");
         this.showForm = false;
+        this.$toast.success("Détails de livraison enregistrés avec succès !");
       } catch (error) {
         console.error("Erreur lors de l'enregistrement :", error);
-        console.log("Une erreur est survenue lors de l'enregistrement.");
+        this.$toast.error("Une erreur est survenue lors de l'enregistrement.");
       }
     },
     async fetchLivraisonDetails(docId) {
@@ -192,6 +261,17 @@ export default {
       }
     },
     async envoyerMessageTelegram() {
+
+      var nom = document.getElementById("nom").value;
+      var tel = document.getElementById("tel").value;
+      var ville = document.getElementById("ville").value;
+      var adresse = document.getElementById("adresse").value;
+      
+      if (!nom || !tel || !ville || !adresse) {
+        this.$toast.error("Veuillez remplir tous les champs de livraison avant de confirmer l'achat.");
+        return;
+      }
+
       const botToken = process.env.TELEGRAM_BOT_TOKEN || "default_bot_token";
       const chatId = process.env.TELEGRAM_CHAT_ID || "default_chat_id";
 
@@ -200,9 +280,7 @@ export default {
         console.error(
           "Les variables d'environnement par défaut sont utilisées. Assurez-vous que le fichier .env est correctement configuré et que les variables TELEGRAM_BOT_TOKEN et TELEGRAM_CHAT_ID sont définies."
         );
-        console.log(
-          "Erreur de configuration : les identifiants Telegram sont manquants ou incorrects. Veuillez vérifier votre fichier .env."
-        );
+        this.$toast.error("Erreur de configuration : les identifiants Telegram sont manquants ou incorrects.");
         return;
       }
 
@@ -215,36 +293,42 @@ export default {
 🏠 *Adresse* : ${this.form.adresse}
 
 🛒 *Détails du panier* :
-${this.cartItems.map(item => `  • ${item.name} x${item.quantity} — ${item.prix} FCFA`).join("\n")}
+${this.cartItems
+  .map((item) => `  • ${item.name} x${item.quantity} — ${item.prix} FCFA`)
+  .join("\n")}
 
 ✅ Merci pour votre commande !
 `;
 
       try {
-        const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            chat_id: chatId,
-            text: message,
-            parse_mode: "Markdown",
-          }),
-        });
+        const response = await fetch(
+          `https://api.telegram.org/bot${botToken}/sendMessage`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              chat_id: chatId,
+              text: message,
+              parse_mode: "Markdown",
+            }),
+          }
+        );
 
         if (!response.ok) {
           const errorData = await response.json();
           console.error("Erreur lors de l'envoi du message Telegram :", errorData);
-          console.log(`Erreur Telegram : ${errorData.description || "Une erreur est survenue."}`);
+          this.$toast.error(`Erreur Telegram : ${errorData.description || "Une erreur est survenue."}`);
           return;
         }
 
         console.log("Commande envoyée avec succès !");
+        this.$toast.success("Commande envoyée avec succès !");
         this.$router.push("/ticket");
         localStorage.removeItem("cart");
         this.$store.commit("clearCart");
       } catch (error) {
         console.error("Erreur lors de l'envoi du message Telegram :", error);
-        console.log("Une erreur réseau est survenue lors de l'envoi de la commande.");
+        this.$toast.error("Une erreur réseau est survenue lors de l'envoi de la commande.");
       }
     },
     modifier() {

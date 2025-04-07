@@ -12,10 +12,22 @@
     "chunkName": "pages/aide"
   },
   {
+    "name": "confidentialite",
+    "path": "/confidentialite",
+    "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\confidentialite.vue",
+    "chunkName": "pages/confidentialite"
+  },
+  {
     "name": "connexion",
     "path": "/connexion",
     "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\connexion.vue",
     "chunkName": "pages/connexion"
+  },
+  {
+    "name": "cookies",
+    "path": "/cookies",
+    "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\cookies.vue",
+    "chunkName": "pages/cookies"
   },
   {
     "name": "ecouteurs",

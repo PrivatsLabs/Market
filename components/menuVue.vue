@@ -79,7 +79,7 @@
     <v-spacer></v-spacer>
 
 
-    <v-btn large confortable text class="box pa-5" style="margin-top: auto !important; margin-bottom: 50px;">
+    <v-btn @click="aide" large confortable text class="box pa-5" style="margin-top: auto !important; margin-bottom: 50px;">
       <v-icon>mdi-help-circle</v-icon>
       <span>Aide</span>
       <v-spacer></v-spacer>
@@ -163,6 +163,11 @@ export default {
     },
     home() {
       this.$router.push("/");
+      this.close();
+      this.closeCart();
+    },
+    aide() {
+      this.$router.push("/aide");
       this.close();
       this.closeCart();
     },

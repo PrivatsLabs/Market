@@ -89,6 +89,7 @@ export default {
   plugins: [
     // '~/plugins/firebase.js',
     // '~/plugins/auth.js',
+    { src: "~/plugins/vue-toastification.js", mode: "client" }, // Charge uniquement côté client
   ],
 
 

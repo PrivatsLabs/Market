@@ -6,7 +6,9 @@ import scrollBehavior from './router.scrollBehavior.js'
 
 const _7700dd0c = () => interopDefault(import('..\\pages\\accessoires.vue' /* webpackChunkName: "pages/accessoires" */))
 const _ebb261a2 = () => interopDefault(import('..\\pages\\aide.vue' /* webpackChunkName: "pages/aide" */))
+const _691f507c = () => interopDefault(import('..\\pages\\confidentialite.vue' /* webpackChunkName: "pages/confidentialite" */))
 const _228ae733 = () => interopDefault(import('..\\pages\\connexion.vue' /* webpackChunkName: "pages/connexion" */))
+const _c048270e = () => interopDefault(import('..\\pages\\cookies.vue' /* webpackChunkName: "pages/cookies" */))
 const _609ff14b = () => interopDefault(import('..\\pages\\ecouteurs.vue' /* webpackChunkName: "pages/ecouteurs" */))
 const _6883f5ab = () => interopDefault(import('..\\pages\\iphone.vue' /* webpackChunkName: "pages/iphone" */))
 const _5f892222 = () => interopDefault(import('..\\pages\\montres.vue' /* webpackChunkName: "pages/montres" */))
@@ -41,9 +43,17 @@ export const routerOptions = {
     component: _ebb261a2,
     name: "aide"
   }, {
+    path: "/confidentialite",
+    component: _691f507c,
+    name: "confidentialite"
+  }, {
     path: "/connexion",
     component: _228ae733,
     name: "connexion"
+  }, {
+    path: "/cookies",
+    component: _c048270e,
+    name: "cookies"
   }, {
     path: "/ecouteurs",
     component: _609ff14b,
