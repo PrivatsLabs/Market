@@ -104,7 +104,21 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/sitemap', // Ajout du module sitemap
   ],
+
+  sitemap: {
+    hostname: 'https://lafyshop.com', // Remplacez par l'URL de votre site
+    gzip: true,
+    routes: [
+      '/', // Page d'accueil
+      '/telephones', // Exemple de route
+      '/montres',
+      '/samsung',
+      '/iphone',
+      '/redmi',
+    ],
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {

@@ -9,6 +9,7 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "@nuxtjs/sitemap": "^7.2.10",
     "core-js": "^3.25.3",
     "firebase": "^11.5.0",
     "node-fetch-native": "^1.6.4",
