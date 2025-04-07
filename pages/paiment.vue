@@ -261,13 +261,13 @@ export default {
       }
     },
     async envoyerMessageTelegram() {
-
-      var nom = document.getElementById("nom").value;
-      var tel = document.getElementById("tel").value;
-      var ville = document.getElementById("ville").value;
-      var adresse = document.getElementById("adresse").value;
-      
-      if (!nom || !tel || !ville || !adresse) {
+      // Vérifiez si tous les champs sont remplis et ne contiennent pas uniquement des espaces
+      if (
+        !this.form.nom?.trim() ||
+        !this.form.telephone?.trim() ||
+        !this.form.ville?.trim() ||
+        !this.form.adresse?.trim()
+      ) {
         this.$toast.error("Veuillez remplir tous les champs de livraison avant de confirmer l'achat.");
         return;
       }

@@ -13,7 +13,7 @@
          </div> 
          <div class="actions">
             <button @click="vider" class="history" type="button">Retour a l'accueil</button> 
-            <button class="track" type="button">Nous contacter</button> 
+            <button @click="contacter" class="track" type="button">Nous contacter</button> 
             </div> 
             </div> 
             </div>
@@ -162,6 +162,9 @@ export default ({
       vider(){
         localStorage.removeItem('cart');
         window.location.href= '/';
+      },
+      contacter(){
+        window.location.href= '/aide';
       }
     }
 
