@@ -108,7 +108,7 @@ export default {
   ],
 
   sitemap: {
-    hostname: 'http://localhost:3000', // Assurez-vous que l'URL est valide et ne contient pas de caractères invalides
+    hostname: 'https://www.lafyshops.com/', // Assurez-vous que l'URL est valide et ne contient pas de caractères invalides
     gzip: true,
     routes: async () => {
       try {
@@ -180,5 +180,8 @@ export default {
     static: {
       cacheControl: false
     }
+  },
+
+  router: {
   },
 }

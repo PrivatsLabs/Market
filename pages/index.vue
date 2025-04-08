@@ -1,5 +1,8 @@
 <template>
   <div class="wrapper">
+    <!-- <div>
+      <h1>Bienvenue sur LafyShop</h1>
+    </div> -->
 
     <div class="toast">
       <div>
@@ -199,5 +202,17 @@ import Affiche5Vue from '../components/affiche5Vue.vue';
 
 export default {
   name: "IndexPage",
+  data() {
+    return {
+      ipBlacklist: [""], // Liste des IP bloquées
+    };
+  },
+  async mounted() {
+    const clientIp = localStorage.getItem("clientIp");
+    if (this.ipBlacklist.includes(clientIp)) {
+      console.warn("Accès refusé pour l'adresse IP :", clientIp);
+      this.$router.push("/access-denied"); // Redirige vers la page d'accès refusé
+    }
+  },
 };
 </script>

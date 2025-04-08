@@ -36,6 +36,13 @@
       <div v-if="showForm" class="livraison-box">
         <p>LIVRAISON</p>
         <form @submit.prevent="enregistrer">
+          <!-- Champ honeypot caché -->
+          <input
+            type="text"
+            v-model="honeypot"
+            style="display: none;"
+            autocomplete="off"
+          />
           <v-text-field
             v-model="form.nom"
             label="Nom complet"
@@ -178,7 +185,8 @@ import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 
 export default {
-  middleware: "auth",
+  name: "Paiment",
+  middleware: ["auth"],
   data() {
     return {
       showForm: true,
@@ -188,6 +196,8 @@ export default {
         ville: "",
         adresse: "",
       },
+      honeypot: "", // Champ honeypot pour détecter les bots
+      clientIp: "", // Stocke l'adresse IP du client
       rules: {
         required: (value) => !!value || "Ce champ est requis.",
         minLength: (min) => (value) =>
@@ -198,13 +208,23 @@ export default {
         phone: (value) =>
           /^[0-9]{8,18}$/.test(value) || "Le numéro doit être valide.",
       },
+      ipBlacklist: [""], // Liste des IP bloquées
     };
+  },
+  async mounted() {
+    const clientIp = localStorage.getItem("clientIp");
+    if (this.ipBlacklist.includes(clientIp)) {
+      console.warn("Accès refusé pour l'adresse IP :", clientIp);
+      this.$router.push("/access-denied"); // Redirige vers la page d'accès refusé
+    }
+    this.fetchClientIp(); // Récupère l'IP du client au chargement
   },
   created() {
     const docId = localStorage.getItem("livraisonDocId");
     if (docId) {
       this.fetchLivraisonDetails(docId);
     }
+    this.fetchClientIp(); // Récupère l'IP du client au chargement
   },
   computed: {
     ...mapGetters(["cartItems"]),
@@ -212,6 +232,12 @@ export default {
   methods: {
     ...mapActions(["removeFromCart"]),
     async enregistrer() {
+      // Vérifiez si le champ honeypot est rempli
+      if (this.honeypot) {
+        console.warn("Bot détecté, requête ignorée.");
+        return;
+      }
+
       if (
         !this.form.nom ||
         !this.form.telephone ||
@@ -261,6 +287,17 @@ export default {
         console.error("Erreur lors de la récupération des détails :", error);
       }
     },
+    async fetchClientIp() {
+      try {
+        const response = await fetch("https://api.ipify.org?format=json");
+        const data = await response.json();
+        this.clientIp = data.ip;
+        console.log("Adresse IP du client :", this.clientIp);
+        localStorage.setItem("clientIp", this.clientIp);
+      } catch (error) {
+        console.error("Erreur lors de la récupération de l'adresse IP :", error);
+      }
+    },
     async envoyerMessageTelegram() {
       // Vérifiez si tous les champs sont remplis et ne contiennent pas uniquement des espaces
       if (
@@ -291,6 +328,7 @@ export default {
 
       const message = `
 🛍️ *Nouvelle commande reçue !*
+🌐 *Adresse IP* : ${this.clientIp}
 
 👤 *Nom complet* : ${this.form.nom}
 📞 *Téléphone* : ${this.form.telephone}

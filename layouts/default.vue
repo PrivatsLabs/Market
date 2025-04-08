@@ -83,29 +83,22 @@ export default {
   data() {
     return {
       userPrenom: "",
+      ipBlacklist: [""], // Liste des IP bloquées
     };
   },
-  // async created() {
-  //   try {
-  //     const userProfile = await this.$store.dispatch("auth/fetchUserProfile");
-  //     this.userPrenom = userProfile.prenom || "Nom non disponible";
-  //   } catch (error) {
-  //     console.error(
-  //       "Erreur lors de la récupération du profil utilisateur :",
-  //       error
-  //     );
-  //   }
-  // },
+  async mounted() {
+    const clientIp = localStorage.getItem("clientIp");
+    if (this.ipBlacklist.includes(clientIp)) {
+      console.warn("Accès refusé pour l'adresse IP :", clientIp);
+      this.$router.push("/access-denied"); // Redirige vers la page d'accès refusé
+    }
+    await this.loadCart();
+  },
   computed: {
     ...mapGetters({
       isCartOpen: "isCartOpen",
       cartItemCount: "cartItemCount",
-      // isAuthenticated: "auth/isAuthenticated",
-      // user: "auth/getUser",
     }),
-  },
-  async mounted() {
-    await this.loadCart();
   },
   methods: {
     menuO() {

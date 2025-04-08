@@ -161,6 +161,7 @@ export default ({
     methods: {
       vider(){
         localStorage.removeItem('cart');
+        localStorage.removeItem('clientIp');
         window.location.href= '/';
       },
       contacter(){

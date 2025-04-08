@@ -54,6 +54,18 @@
 <script>
 export default {
   name: "AidePage",
+  data() {
+    return {
+      ipBlacklist: [""], // Liste des IP bloquées
+    };
+  },
+  async mounted() {
+    const clientIp = localStorage.getItem("clientIp");
+    if (this.ipBlacklist.includes(clientIp)) {
+      console.warn("Accès refusé pour l'adresse IP :", clientIp);
+      this.$router.push("/access-denied"); // Redirige vers la page d'accès refusé
+    }
+  },
 };
 </script>
 
