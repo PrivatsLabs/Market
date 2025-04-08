@@ -108,15 +108,33 @@ export default {
   ],
 
   sitemap: {
-    hostname: 'https://lafyshops.com', // Remplacez par l'URL de votre site
+    hostname: 'https://www.lafyshops.com/', // Assurez-vous que l'URL est valide et ne contient pas de caractères invalides
     gzip: true,
-    routes: [
-      '/', // Page d'accueil
-      '/telephones', // Exemple de route
-      '/montres',
-      '/samsung',
-      '/iphone',
-      '/redmi',
+    routes: async () => {
+      try {
+        // Routes statiques
+        const staticRoutes = [
+          '/',
+          '/telephones',
+          '/montres',
+          '/samsung',
+          '/iphone',
+          '/redmi',
+        ];
+
+        // Ajoutez ici des routes dynamiques si nécessaire
+        const dynamicRoutes = []; // Exemple : récupération des routes dynamiques
+
+        // Combinez les routes statiques et dynamiques
+        return [...staticRoutes, ...dynamicRoutes];
+      } catch (error) {
+        console.error('Erreur lors de la génération des routes pour le sitemap :', error);
+        return []; // Retournez un tableau vide en cas d'erreur
+      }
+    },
+    exclude: [
+      '/admin/**', // Exemple : exclure des routes spécifiques
+      '/login',
     ],
   },
 
