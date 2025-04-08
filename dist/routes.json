@@ -3,103 +3,120 @@
     "name": "accessoires",
     "path": "/accessoires",
     "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\accessoires.vue",
-    "chunkName": "pages/accessoires"
+    "chunkName": "pages/accessoires",
+    "url": "/accessoires"
   },
   {
     "name": "aide",
     "path": "/aide",
     "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\aide.vue",
-    "chunkName": "pages/aide"
+    "chunkName": "pages/aide",
+    "url": "/aide"
   },
   {
     "name": "confidentialite",
     "path": "/confidentialite",
     "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\confidentialite.vue",
-    "chunkName": "pages/confidentialite"
+    "chunkName": "pages/confidentialite",
+    "url": "/confidentialite"
   },
   {
     "name": "connexion",
     "path": "/connexion",
     "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\connexion.vue",
-    "chunkName": "pages/connexion"
+    "chunkName": "pages/connexion",
+    "url": "/connexion"
   },
   {
     "name": "cookies",
     "path": "/cookies",
     "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\cookies.vue",
-    "chunkName": "pages/cookies"
+    "chunkName": "pages/cookies",
+    "url": "/cookies"
   },
   {
     "name": "ecouteurs",
     "path": "/ecouteurs",
     "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\ecouteurs.vue",
-    "chunkName": "pages/ecouteurs"
+    "chunkName": "pages/ecouteurs",
+    "url": "/ecouteurs"
   },
   {
     "name": "iphone",
     "path": "/iphone",
     "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\iphone.vue",
-    "chunkName": "pages/iphone"
+    "chunkName": "pages/iphone",
+    "url": "/iphone"
   },
   {
     "name": "montres",
     "path": "/montres",
     "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\montres.vue",
-    "chunkName": "pages/montres"
+    "chunkName": "pages/montres",
+    "url": "/montres"
   },
   {
     "name": "paiment",
     "path": "/paiment",
     "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\paiment.vue",
-    "chunkName": "pages/paiment"
+    "chunkName": "pages/paiment",
+    "url": "/paiment"
   },
   {
     "name": "pc",
     "path": "/pc",
     "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\pc.vue",
-    "chunkName": "pages/pc"
+    "chunkName": "pages/pc",
+    "url": "/pc"
   },
   {
     "name": "redmi",
     "path": "/redmi",
     "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\redmi.vue",
-    "chunkName": "pages/redmi"
+    "chunkName": "pages/redmi",
+    "url": "/redmi"
   },
   {
     "name": "samsung",
     "path": "/samsung",
     "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\samsung.vue",
-    "chunkName": "pages/samsung"
+    "chunkName": "pages/samsung",
+    "url": "/samsung"
   },
   {
     "name": "settings",
     "path": "/settings",
     "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\settings.vue",
-    "chunkName": "pages/settings"
+    "chunkName": "pages/settings",
+    "url": "/settings"
   },
   {
     "name": "tablettes",
     "path": "/tablettes",
     "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\tablettes.vue",
-    "chunkName": "pages/tablettes"
+    "chunkName": "pages/tablettes",
+    "url": "/tablettes"
   },
   {
     "name": "telephones",
     "path": "/telephones",
     "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\telephones.vue",
-    "chunkName": "pages/telephones"
+    "chunkName": "pages/telephones",
+    "url": "/telephones"
   },
   {
     "name": "ticket",
     "path": "/ticket",
     "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\ticket.vue",
-    "chunkName": "pages/ticket"
+    "chunkName": "pages/ticket",
+    "url": "/ticket"
   },
   {
     "name": "index",
     "path": "/",
     "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\index.vue",
-    "chunkName": "pages/index"
+    "chunkName": "pages/index",
+    "url": "/"
   },
   {
     "name": "details-id",
