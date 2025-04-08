@@ -108,7 +108,7 @@ export default {
   ],
 
   sitemap: {
-    hostname: 'https://www.lafyshops.com/', // Assurez-vous que l'URL est valide et ne contient pas de caractères invalides
+    hostname: 'http://localhost:3000', // Assurez-vous que l'URL est valide et ne contient pas de caractères invalides
     gzip: true,
     routes: async () => {
       try {
@@ -123,10 +123,14 @@ export default {
         ];
 
         // Ajoutez ici des routes dynamiques si nécessaire
-        const dynamicRoutes = []; // Exemple : récupération des routes dynamiques
+        // Exemple : récupération des routes dynamiques depuis une API ou une base de données
+        const dynamicRoutes = []; // Remplacez par vos routes dynamiques si nécessaire
 
         // Combinez les routes statiques et dynamiques
-        return [...staticRoutes, ...dynamicRoutes];
+        return [...staticRoutes, ...dynamicRoutes].filter(route => {
+          // Vérifiez que la route n'est pas nulle ou indéfinie
+          return route && typeof route === 'string';
+        });
       } catch (error) {
         console.error('Erreur lors de la génération des routes pour le sitemap :', error);
         return []; // Retournez un tableau vide en cas d'erreur
