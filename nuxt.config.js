@@ -108,7 +108,7 @@ export default {
   ],
 
   sitemap: {
-    hostname: 'https://lafyshop.com', // Remplacez par l'URL de votre site
+    hostname: 'https://lafyshops.com', // Remplacez par l'URL de votre site
     gzip: true,
     routes: [
       '/', // Page d'accueil
