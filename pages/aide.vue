@@ -65,6 +65,14 @@ export default {
       console.warn("Accès refusé pour l'adresse IP :", clientIp);
       this.$router.push("/access-denied"); // Redirige vers la page d'accès refusé
     }
+
+    // Ajout du script Tawk.to
+    const script = document.createElement("script");
+    script.src = "https://embed.tawk.to/67f6a3ac18d2ac190c62a608/1iodmumnj";
+    script.async = true;
+    script.charset = "UTF-8";
+    script.setAttribute("crossorigin", "*");
+    document.body.appendChild(script);
   },
 };
 </script>

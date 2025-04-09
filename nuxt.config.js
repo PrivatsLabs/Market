@@ -78,7 +78,16 @@ export default {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/logo.ico' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;600;700&display=swap' },
-    ]
+    ],
+    script: [
+      // {
+      //   hid: 'tawk-to',
+      //   src: 'https://embed.tawk.to/67f6a3ac18d2ac190c62a608/1iodmumnj',
+      //   async: true,
+      //   charset: 'UTF-8',
+      //   crossorigin: 'anonymous',
+      // },
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
