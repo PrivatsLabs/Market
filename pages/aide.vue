@@ -42,7 +42,7 @@
       <br>
       <p>Pour toute assistance, vous pouvez nous joindre via :</p>
       <ul>
-        <li><strong>Email :</strong> support@lafyshop.com</li>
+        <li><strong>Email :</strong> sercicelafyshop@gmail.com</li>
         <li><strong>Téléphone :</strong> +226 xx xx xx xx</li>
         <li><strong>Adresse :</strong> Ouagadougou, Burkina Faso</li>
         <li><strong>Par chat :</strong> Via l'icône du chat en bas de l'écran</li>
@@ -66,9 +66,9 @@ export default {
       this.$router.push("/access-denied"); // Redirige vers la page d'accès refusé
     }
 
-    // Ajout du script Tawk.to
+    // Ajout du script Tawk.to avec les nouvelles coordonnées
     const script = document.createElement("script");
-    script.src = "https://embed.tawk.to/67f6a3ac18d2ac190c62a608/1iodmumnj";
+    script.src = "https://embed.tawk.to/67f6fbf09b5f671906ebe1f7/1ioecg9gd";
     script.async = true;
     script.charset = "UTF-8";
     script.setAttribute("crossorigin", "*");
