@@ -16,6 +16,7 @@ import { createStore } from './store.js'
 import nuxt_plugin_plugin_779615e6 from 'nuxt_plugin_plugin_779615e6' // Source: .\\components\\plugin.js (mode: 'all')
 import nuxt_plugin_plugin_0f7ddfce from 'nuxt_plugin_plugin_0f7ddfce' // Source: .\\vuetify\\plugin.js (mode: 'all')
 import nuxt_plugin_vuetoastification_4e3fd043 from 'nuxt_plugin_vuetoastification_4e3fd043' // Source: ..\\plugins\\vue-toastification.js (mode: 'client')
+import nuxt_plugin_firebase_34d6f55a from 'nuxt_plugin_firebase_34d6f55a' // Source: ..\\plugins\\firebase.js (mode: 'all')
 
 // Component: <ClientOnly>
 Vue.component(ClientOnly.name, ClientOnly)
@@ -225,6 +226,10 @@ async function createApp(ssrContext, config = {}) {
 
   if (process.client && typeof nuxt_plugin_vuetoastification_4e3fd043 === 'function') {
     await nuxt_plugin_vuetoastification_4e3fd043(app.context, inject)
+  }
+
+  if (typeof nuxt_plugin_firebase_34d6f55a === 'function') {
+    await nuxt_plugin_firebase_34d6f55a(app.context, inject)
   }
 
   // Lock enablePreview in context

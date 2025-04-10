@@ -16,23 +16,27 @@
            v-if="etat !== 'co'"
             v-model="nom"
             color="#10a37f"
-            label="Nom"
+            label="Nom et prenom"
             type="text"
             variant="underlined"
+            maxlength="30"
+            minlength="3"
             clearable
             :rules="[v => !!v || 'Nom est requis']"
             required
           ></v-text-field>
 
           <v-text-field
-           v-if="etat !== 'co'"
-            v-model="prenom"
+            v-model="phone"
             color="#10a37f"
-            label="Prenom"
-            type="text"
+            label="Numéro de téléphone"
             variant="underlined"
+            maxlength="10"
+            minlength="8"
+            type="tel"
             clearable
-            :rules="[v => !!v || 'Prenom est requis']"
+            :rules="[v => !!v || 'Numéro de téléphone est requis']"
+            v-if="etat !== 'co'"
             required
           ></v-text-field>
 
@@ -41,6 +45,8 @@
             color="#10a37f"
             label="Email"
             type="email"
+            maxlength="30"
+            minlength="3"
             variant="underlined"
             clearable
             :rules="[v => !!v || 'Email est requis']"
@@ -49,14 +55,26 @@
 
           <v-text-field
             v-model="password"
+            :append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+            @click:append="showPassword = !showPassword"
+            :type="showPassword ? 'text' : 'password'"
             color="#10a37f"
             label="Mot de passe"
-            type="password"
             variant="underlined"
             :rules="[v => !!v || 'Mot de passe est requis']"
             required
           ></v-text-field>
 
+          <v-text-field
+            v-model="pays"
+            color="#10a37f"
+            label="pays"
+            variant="underlined"
+            clearable
+            :rules="[v => !!v || 'Pays est requise']"
+            v-if="etat !== 'co'"
+            required
+          ></v-text-field>
           <v-text-field
             v-model="address"
             color="#10a37f"
@@ -68,17 +86,6 @@
             required
           ></v-text-field>
 
-          <v-text-field
-            v-model="phone"
-            color="#10a37f"
-            label="Numéro de téléphone"
-            variant="underlined"
-            type="tel"
-            clearable
-            :rules="[v => !!v || 'Numéro de téléphone est requis']"
-            v-if="etat !== 'co'"
-            required
-          ></v-text-field>
 
           <v-checkbox
             v-model="terms"
@@ -97,7 +104,7 @@
         <v-spacer></v-spacer>
 
         <v-btn @click="signUp" :disabled="!valid" tonal comfortable block large color="#10a37f" v-if="etat !== 'co'">
-          <span style="color: white;">S'inscrit</span>
+          <span style="color: white;">S'inscrire</span>
           <v-icon icon="mdi-chevron-right" end></v-icon>
         </v-btn>
 
@@ -124,23 +131,28 @@
 </template>
 
 <script>
+import { auth, db } from "@/plugins/firebase";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+
 export default {
   data: () => ({
     etat: "co",
     nom: null,
-    prenom: null,
     email: null,
     password: null,
     address: null,
     phone: null,
+    pays: null,
     terms: false,
     loading: false,
     error: null,
     valid: false,
+    showPassword: false, // Ajout de la variable pour gérer l'affichage du mot de passe
   }),
   methods: {
     changeEtat() {
-      this.etat = this.etat === "" ? "co" : "";
+      this.etat = this.etat === "co" ? "" : "co";
     },
     retour() {
       window.history.back();
@@ -152,19 +164,25 @@ export default {
       this.loading = true;
       this.error = null;
       try {
-        await this.$store.dispatch('auth/signUp', {
+        // Crée un utilisateur avec Firebase Auth
+        const userCredential = await createUserWithEmailAndPassword(auth, this.email, this.password);
+        const user = userCredential.user;
+
+        // Enregistre les données supplémentaires dans Firestore
+        await setDoc(doc(db, "users", user.uid), {
+          nom: this.nom,
           email: this.email,
-          password: this.password,
           address: this.address,
           phone: this.phone,
-          nom: this.nom,
-          prenom: this.prenom,
+          pays: this.pays,
+          createdAt: new Date(),
         });
-        this.$router.push('/');
-        this.$router.go(); // Rechargera la page actuelle
 
+        this.$router.push("/");
+        this.$toast.success("Inscription réussie !");
       } catch (error) {
         this.error = error.message;
+        this.$toast.error("Erreur lors de l'inscription : " + error.message);
       } finally {
         this.loading = false;
       }
@@ -176,14 +194,13 @@ export default {
       this.loading = true;
       this.error = null;
       try {
-        await this.$store.dispatch('auth/signIn', {
-          email: this.email,
-          password: this.password,
-        });
-        this.$router.push('/');
-        this.$router.go(); // Rechargera la page actuelle
+        // Connecte l'utilisateur avec Firebase Auth
+        await signInWithEmailAndPassword(auth, this.email, this.password);
+        this.$router.push("/");
+        this.$toast.success("Connexion réussie !");
       } catch (error) {
         this.error = error.message;
+        this.$toast.error("Erreur lors de la connexion : " + error.message);
       } finally {
         this.loading = false;
       }
@@ -192,18 +209,11 @@ export default {
 };
 </script>
 
-
-
-
-
 <style scoped>
-body{
-
+body {
   font-family: 'Google Sans', sans-serif !important;
-
 }
-h1{
+h1 {
   font-family: 'Google Sans', sans-serif !important;
-
 }
 </style>
