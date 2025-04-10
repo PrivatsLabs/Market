@@ -133,7 +133,7 @@
 <script>
 import { auth, db } from "@/plugins/firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 
 export default {
   data: () => ({
@@ -196,7 +196,15 @@ export default {
       this.error = null;
       try {
         // Connecte l'utilisateur avec Firebase Auth
-        await signInWithEmailAndPassword(auth, this.email, this.password);
+        const userCredential = await signInWithEmailAndPassword(auth, this.email, this.password);
+        const user = userCredential.user;
+
+        // Récupère les données utilisateur depuis Firestore
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          localStorage.setItem("userPrenom", userData.nom); // Stocke le prénom dans localStorage
+        }
 
         this.$router.push("/");
         this.$toast.success("Connexion réussie !");

@@ -20,8 +20,10 @@
           <v-spacer></v-spacer>
           <v-icon @click="search">mdi-magnify</v-icon>
           <v-spacer></v-spacer>
-          <v-icon @click="log">mdi-account</v-icon>
-
+          <v-icon id="mdi-account" @click="log">mdi-account</v-icon>
+          <v-avatar v-if="showAvatar" size="25" color="primary" class="white--text font-weight-bold">
+            <span>{{ userInitial }}</span>
+          </v-avatar>
           <v-spacer v-if="cartItemCount > 0"></v-spacer>
 
           <v-badge v-if="cartItemCount > 0" color="info" :content="cartItemCount">
@@ -84,9 +86,19 @@ export default {
   },
   data() {
     return {
-      userPrenom: "",
+      userPrenom: "", // Nom de l'utilisateur connecté
+      showAvatar: false, // Contrôle la visibilité de l'avatar
       ipBlacklist: [""], // Liste des IP bloquées
     };
+  },
+  computed: {
+    ...mapGetters({
+      isCartOpen: "isCartOpen",
+      cartItemCount: "cartItemCount",
+    }),
+    userInitial() {
+      return this.userPrenom ? this.userPrenom.charAt(0).toUpperCase() : "U";
+    },
   },
   async mounted() {
     try {
@@ -99,12 +111,8 @@ export default {
     } catch (error) {
       console.error("Erreur lors de la récupération de l'adresse IP :", error);
     }
-  },
-  computed: {
-    ...mapGetters({
-      isCartOpen: "isCartOpen",
-      cartItemCount: "cartItemCount",
-    }),
+
+    this.etat(); // Appel de la méthode `etat` lors du montage
   },
   methods: {
     async fetchClientIp() {
@@ -165,6 +173,24 @@ export default {
     },
     settings() {
       this.$router.push("/settings");
+    },
+
+    etat() {
+      const accountIcon = document.getElementById("mdi-account");
+      if (!accountIcon) {
+        console.warn("L'élément avec l'ID 'mdi-account' est introuvable.");
+        return;
+      }
+
+      const etat = localStorage.getItem("etat");
+      if (etat === "co") {
+        accountIcon.style.display = "none";
+        this.showAvatar = true; // Affiche l'avatar
+        this.userPrenom = localStorage.getItem("userPrenom") || "Utilisateur"; // Récupère le prénom de l'utilisateur
+      } else {
+        accountIcon.style.display = "block";
+        this.showAvatar = false; // Cache l'avatar
+      }
     },
   },
 };
