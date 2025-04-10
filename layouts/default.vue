@@ -21,7 +21,7 @@
           <v-icon @click="search">mdi-magnify</v-icon>
           <v-spacer></v-spacer>
           <v-icon id="mdi-account" @click="log">mdi-account</v-icon>
-          <v-avatar v-if="showAvatar" size="25" color="primary" class="white--text font-weight-bold">
+          <v-avatar @click="profil" v-if="showAvatar" size="25" color="primary" class="white--text font-weight-bold">
             <span>{{ userInitial }}</span>
           </v-avatar>
           <v-spacer v-if="cartItemCount > 0"></v-spacer>
@@ -191,6 +191,16 @@ export default {
         accountIcon.style.display = "block";
         this.showAvatar = false; // Cache l'avatar
       }
+    },
+    profil() {
+      this.$router.push("/profil");
+      document.querySelector(".menu").style.width = "0%";
+      document.querySelector(".menu").style.padding = "0px";
+      document.querySelector(".mdi-close").style.display = "none";
+      const boxes = document.querySelectorAll(".box");
+      boxes.forEach((box) => {
+        box.style.display = "none";
+      });
     },
   },
 };
