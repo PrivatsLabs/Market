@@ -132,7 +132,7 @@
 
 <script>
 import { auth, db } from "@/plugins/firebase";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 
 export default {
@@ -149,6 +149,7 @@ export default {
     error: null,
     valid: false,
     showPassword: false, // Ajout de la variable pour gérer l'affichage du mot de passe
+    isLoggedIn: false, // État de connexion
   }),
   methods: {
     changeEtat() {
@@ -196,8 +197,11 @@ export default {
       try {
         // Connecte l'utilisateur avec Firebase Auth
         await signInWithEmailAndPassword(auth, this.email, this.password);
+
         this.$router.push("/");
         this.$toast.success("Connexion réussie !");
+        localStorage.setItem("etat", "co"); // Met à jour l'état dans localStorage
+        this.reloadAfterDelay(); // Recharger la page après un délai
       } catch (error) {
         this.error = error.message;
         this.$toast.error("Erreur lors de la connexion : " + error.message);
@@ -205,6 +209,28 @@ export default {
         this.loading = false;
       }
     },
+    async logout() {
+      try {
+        await signOut(auth);
+        this.isLoggedIn = false;
+        localStorage.setItem("etat", "deco"); // Met à jour l'état dans localStorage
+        this.$router.push("/connexion");
+        this.$toast.success("Déconnexion réussie !");
+        window.location.reload();
+      } catch (error) {
+        this.$toast.error("Erreur lors de la déconnexion : " + error.message);
+      }
+    },
+    reloadAfterDelay() {
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500); // Recharger après 2 secondes
+    },
+  },
+  mounted() {
+    onAuthStateChanged(auth, (user) => {
+      this.isLoggedIn = !!user;
+    });
   },
 };
 </script>

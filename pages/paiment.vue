@@ -212,17 +212,12 @@ export default {
     };
   },
   async mounted() {
-    const clientIp = localStorage.getItem("clientIp");
-    // Ignorez les adresses IP locales
-    if (clientIp === "::1" || clientIp === "127.0.0.1") {
-      console.log("Adresse IP locale détectée :", clientIp);
-      return;
-    }
-    if (this.ipBlacklist.includes(clientIp)) {
-      console.warn("Accès refusé pour l'adresse IP :", clientIp);
+    const clientIp = localStorage.getItem("clientIp") || await this.fetchClientIp(); // Récupère l'IP si elle n'est pas déjà stockée
+
+    if (this.ipBlacklist.some(ip => ip === clientIp)) {
+      console.warn(`Accès refusé pour l'adresse IP : ${clientIp}`);
       this.$router.push("/access-denied"); // Redirige vers la page d'accès refusé
     }
-    this.fetchClientIp(); // Récupère l'IP du client au chargement
   },
   created() {
     const docId = localStorage.getItem("livraisonDocId");

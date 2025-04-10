@@ -19,6 +19,8 @@
         <div class="d-flex left">
           <v-spacer></v-spacer>
           <v-icon @click="search">mdi-magnify</v-icon>
+          <v-spacer></v-spacer>
+          <v-icon @click="log">mdi-account</v-icon>
 
           <v-spacer v-if="cartItemCount > 0"></v-spacer>
 
@@ -87,17 +89,16 @@ export default {
     };
   },
   async mounted() {
-    const clientIp = localStorage.getItem("clientIp");
-    // Ignorez les adresses IP locales
-    if (clientIp === "::1" || clientIp === "127.0.0.1") {
-      console.log("Adresse IP locale détectée :", clientIp);
-      return;
+    try {
+      const clientIp = localStorage.getItem("clientIp") || (await this.fetchClientIp()); // Récupère l'IP si elle n'est pas déjà stockée
+
+      if (this.ipBlacklist.some(ip => ip === clientIp)) {
+        console.warn(`Accès refusé pour l'adresse IP : ${clientIp}`);
+        this.$router.push("/access-denied"); // Redirige vers la page d'accès refusé
+      }
+    } catch (error) {
+      console.error("Erreur lors de la récupération de l'adresse IP :", error);
     }
-    if (this.ipBlacklist.includes(clientIp)) {
-      console.warn("Accès refusé pour l'adresse IP :", clientIp);
-      this.$router.push("/access-denied"); // Redirige vers la page d'accès refusé
-    }
-    await this.loadCart();
   },
   computed: {
     ...mapGetters({
@@ -106,6 +107,17 @@ export default {
     }),
   },
   methods: {
+    async fetchClientIp() {
+      try {
+        const response = await fetch("https://api.ipify.org?format=json");
+        const data = await response.json();
+        localStorage.setItem("clientIp", data.ip); // Stocke l'IP dans localStorage
+        return data.ip;
+      } catch (error) {
+        console.error("Erreur lors de la récupération de l'adresse IP :", error);
+        return null;
+      }
+    },
     menuO() {
       // Jouer le son à l'ouverture du menu
       const sonOuverture = document.getElementById("son-ouverture");
@@ -121,6 +133,16 @@ export default {
       const boxes = document.querySelectorAll(".box");
       boxes.forEach((box) => {
         box.style.display = "flex";
+      });
+    },
+    log(){
+      this.$router.push("/connexion"); // Redirige vers la page de connexion/inscription
+      document.querySelector(".menu").style.width = "0%";
+      document.querySelector(".menu").style.padding = "0px";
+      document.querySelector(".mdi-close").style.display = "none";
+      const boxes = document.querySelectorAll(".box");
+      boxes.forEach((box) => {
+        box.style.display = "none";
       });
     },
     vibrate() {

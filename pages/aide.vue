@@ -60,11 +60,7 @@ export default {
     };
   },
   async mounted() {
-    const clientIp = localStorage.getItem("clientIp");
-    if (this.ipBlacklist.includes(clientIp)) {
-      console.warn("Accès refusé pour l'adresse IP :", clientIp);
-      this.$router.push("/access-denied"); // Redirige vers la page d'accès refusé
-    }
+   
 
     // Ajout du script Tawk.to avec les nouvelles coordonnées
     const script = document.createElement("script");
