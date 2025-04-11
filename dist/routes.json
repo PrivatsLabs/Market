@@ -1,5 +1,13 @@
 [
   {
+    "name": "about",
+    "path": "/about",
+    "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\about.vue",
+    "chunkName": "pages/about",
+    "url": "/about",
+    "_name": "_4876aaf7"
+  },
+  {
     "name": "accessoires",
     "path": "/accessoires",
     "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\accessoires.vue",

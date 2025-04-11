@@ -218,6 +218,10 @@ export default {
       console.warn(`Accès refusé pour l'adresse IP : ${clientIp}`);
       this.$router.push("/access-denied"); // Redirige vers la page d'accès refusé
     }
+
+    if (localStorage.getItem("etat") === "co") {
+      this.prefillDeliveryDetails(); // Pré-remplit les détails de livraison
+    }
   },
   created() {
     const docId = localStorage.getItem("livraisonDocId");
@@ -296,6 +300,26 @@ export default {
         localStorage.setItem("clientIp", this.clientIp);
       } catch (error) {
         console.error("Erreur lors de la récupération de l'adresse IP :", error);
+      }
+    },
+    async prefillDeliveryDetails() {
+      try {
+        const userId = localStorage.getItem("userId"); // Récupère l'ID utilisateur depuis localStorage
+        if (!userId) return;
+
+        const userDoc = await getDoc(doc(db, "users", userId));
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          this.form.nom = userData.nom || "";
+          this.form.telephone = userData.phone || "";
+          this.form.ville = userData.ville || "";
+          this.form.adresse = userData.address || "";
+          this.showForm = false; // Cache le formulaire si les données sont pré-remplies
+        } else {
+          console.warn("Les données utilisateur sont introuvables.");
+        }
+      } catch (error) {
+        console.error("Erreur lors du pré-remplissage des détails de livraison :", error);
       }
     },
     async envoyerMessageTelegram() {
