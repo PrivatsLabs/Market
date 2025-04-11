@@ -204,6 +204,7 @@ export default {
         if (userDoc.exists()) {
           const userData = userDoc.data();
           localStorage.setItem("userPrenom", userData.nom); // Stocke le prénom dans localStorage
+          localStorage.setItem("userId", user.uid); // Stocke l'ID utilisateur dans localStorage
         }
 
         this.$router.push("/");
@@ -224,6 +225,7 @@ export default {
         localStorage.setItem("etat", "deco"); // Met à jour l'état dans localStorage
         this.$router.push("/connexion");
         this.$toast.success("Déconnexion réussie !");
+        localStorage.removeItem(userId) // Stocke l'ID utilisateur dans localStorage
         window.location.reload();
       } catch (error) {
         this.$toast.error("Erreur lors de la déconnexion : " + error.message);

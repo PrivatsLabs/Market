@@ -397,6 +397,10 @@ ${this.cartItems
 
         console.log("Commande envoyée avec succès !");
         this.$toast.success("Commande envoyée avec succès !");
+        
+        // Enregistrer la commande dans Firebase
+        await this.saveOrderToFirebase();
+
         this.$router.push("/ticket");
         localStorage.removeItem("cart");
         this.$store.commit("clearCart");
@@ -404,6 +408,30 @@ ${this.cartItems
         console.error("Erreur lors de l'envoi du message Telegram :", error);
         this.$toast.error(
           "Une erreur réseau est survenue lors de l'envoi de la commande."
+        );
+      }
+    },
+    async saveOrderToFirebase() {
+      try {
+        const orderData = {
+          nom: this.form.nom,
+          telephone: this.form.telephone,
+          ville: this.form.ville,
+          adresse: this.form.adresse,
+          panier: this.cartItems,
+          total: this.cartItems.reduce(
+            (sum, item) => sum + item.prix * (item.quantity || 1),
+            0
+          ),
+          timestamp: new Date(),
+        };
+
+        await addDoc(collection(db, "orders"), orderData);
+        console.log("Commande enregistrée dans Firebase avec succès !");
+      } catch (error) {
+        console.error("Erreur lors de l'enregistrement de la commande :", error);
+        this.$toast.error(
+          "Une erreur est survenue lors de l'enregistrement de la commande."
         );
       }
     },
