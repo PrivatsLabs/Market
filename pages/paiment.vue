@@ -62,6 +62,13 @@
             clearable
           ></v-text-field>
           <v-text-field
+            v-model="form.pays"
+            id="pays"
+            label="Pays"
+            :rules="[rules.required]"
+            clearable
+          ></v-text-field>
+          <v-text-field
             v-model="form.ville"
             id="ville"
             label="Ville"
@@ -97,6 +104,7 @@
         <ul>
           <li><strong>Nom complet :</strong> {{ form.nom }}</li>
           <li><strong>Téléphone :</strong> {{ form.telephone }}</li>
+          <li><strong>Pays :</strong> {{ form.pays }}</li>
           <li><strong>Ville :</strong> {{ form.ville }}</li>
           <li><strong>Adresse :</strong> {{ form.adresse }}</li>
         </ul>
@@ -193,6 +201,7 @@ export default {
       form: {
         nom: "",
         telephone: "",
+        pays: "",
         ville: "",
         adresse: "",
       },
@@ -218,6 +227,8 @@ export default {
       console.warn(`Accès refusé pour l'adresse IP : ${clientIp}`);
       this.$router.push("/access-denied"); // Redirige vers la page d'accès refusé
     }
+
+    await this.prefillDeliveryDetails();
   },
   created() {
     const docId = localStorage.getItem("livraisonDocId");
@@ -241,6 +252,7 @@ export default {
       if (
         !this.form.nom ||
         !this.form.telephone ||
+        !this.form.pays ||
         !this.form.ville ||
         !this.form.adresse
       ) {
@@ -252,6 +264,7 @@ export default {
         const docRef = await addDoc(collection(db, "livraisons"), {
           nom: this.form.nom,
           telephone: this.form.telephone,
+          pays: this.form.pays,
           ville: this.form.ville,
           adresse: this.form.adresse,
           timestamp: new Date(),
@@ -276,6 +289,7 @@ export default {
           const data = docSnapshot.data();
           this.form.nom = data.nom;
           this.form.telephone = data.telephone;
+          this.form.pays = data.pays;
           this.form.ville = data.ville;
           this.form.adresse = data.adresse;
           this.showForm = false;
@@ -303,6 +317,7 @@ export default {
       if (
         !this.form.nom?.trim() ||
         !this.form.telephone?.trim() ||
+        !this.form.pays?.trim() ||
         !this.form.ville?.trim() ||
         !this.form.adresse?.trim()
       ) {
@@ -385,6 +400,41 @@ ${this.cartItems
     },
     modifier() {
       this.showForm = true;
+    },
+    async prefillDeliveryDetails() {
+      try {
+        const userId = localStorage.getItem("userId");
+        if (userId) {
+          // Tente de récupérer les détails de livraison depuis la collection `users`
+          const userDoc = await getDoc(doc(db, "users", userId));
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+            this.form.nom = userData.nom || "";
+            this.form.telephone = userData.phone || "";
+            this.form.pays = userData.pays || "";
+            this.form.ville = userData.ville || "";
+            this.form.adresse = userData.address || "";
+            this.showForm = false; // Cache le formulaire si les données sont pré-remplies
+            return;
+          }
+        }
+
+        // Si les détails ne sont pas trouvés dans `users`, utilise `livraisonDocId`
+        const docId = localStorage.getItem("livraisonDocId");
+        if (docId) {
+          const livraisonDoc = await getDoc(doc(db, "livraisons", docId));
+          if (livraisonDoc.exists()) {
+            const livraisonData = livraisonDoc.data();
+            this.form.nom = livraisonData.nom || "";
+            this.form.telephone = livraisonData.telephone || "";
+            this.form.ville = livraisonData.ville || "";
+            this.form.adresse = livraisonData.adresse || "";
+            this.showForm = false; // Cache le formulaire si les données sont pré-remplies
+          }
+        }
+      } catch (error) {
+        console.error("Erreur lors du pré-remplissage des détails de livraison :", error);
+      }
     },
   },
 };

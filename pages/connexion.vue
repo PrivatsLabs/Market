@@ -1,19 +1,20 @@
 <template>
   <div class="wrapper">
-    <br>
+    <br />
     <v-btn @click="retour" class="ml-1" plain>
       <v-icon>mdi-arrow-u-left-top</v-icon>
     </v-btn>
-    <br><br><br>
+    <br /><br /><br />
 
     <v-card class="mx-auto" max-width="344" elevation="0">
-      <h1 class="text-h4 text-center">{{ etat === 'co' ? 'Connexion' : 'Inscription' }}</h1>
+      <h1 class="text-h4 text-center">
+        {{ etat === "co" ? "Connexion" : "Inscription" }}
+      </h1>
 
       <v-container>
         <v-form ref="form" v-model="valid">
-         
           <v-text-field
-           v-if="etat !== 'co'"
+            v-if="etat !== 'co'"
             v-model="nom"
             color="#10a37f"
             label="Nom et prenom"
@@ -22,7 +23,7 @@
             maxlength="30"
             minlength="3"
             clearable
-            :rules="[v => !!v || 'Nom est requis']"
+            :rules="[(v) => !!v || 'Nom est requis']"
             required
           ></v-text-field>
 
@@ -35,7 +36,7 @@
             minlength="8"
             type="tel"
             clearable
-            :rules="[v => !!v || 'Numéro de téléphone est requis']"
+            :rules="[(v) => !!v || 'Numéro de téléphone est requis']"
             v-if="etat !== 'co'"
             required
           ></v-text-field>
@@ -49,7 +50,7 @@
             minlength="3"
             variant="underlined"
             clearable
-            :rules="[v => !!v || 'Email est requis']"
+            :rules="[(v) => !!v || 'Email est requis']"
             required
           ></v-text-field>
 
@@ -61,17 +62,29 @@
             color="#10a37f"
             label="Mot de passe"
             variant="underlined"
-            :rules="[v => !!v || 'Mot de passe est requis']"
+            :rules="[(v) => !!v || 'Mot de passe est requis']"
             required
           ></v-text-field>
-
+          <br />
+          <v-divider></v-divider>
+          <br />
           <v-text-field
             v-model="pays"
             color="#10a37f"
-            label="pays"
+            label="Pays"
             variant="underlined"
             clearable
-            :rules="[v => !!v || 'Pays est requise']"
+            :rules="[(v) => !!v || 'Pays est requise']"
+            v-if="etat !== 'co'"
+            required
+          ></v-text-field>
+          <v-text-field
+            v-model="ville"
+            color="#10a37f"
+            label="Ville"
+            variant="underlined"
+            clearable
+            :rules="[(v) => !!v || 'Ville est requise']"
             v-if="etat !== 'co'"
             required
           ></v-text-field>
@@ -81,18 +94,17 @@
             label="Adresse"
             variant="underlined"
             clearable
-            :rules="[v => !!v || 'Adresse est requise']"
+            :rules="[(v) => !!v || 'Adresse est requise']"
             v-if="etat !== 'co'"
             required
           ></v-text-field>
-
 
           <v-checkbox
             v-model="terms"
             color="#10a37f"
             label="J'accepte les conditions"
             v-if="etat !== 'co'"
-            :rules="[v => !!v || 'Vous devez accepter les conditions']"
+            :rules="[(v) => !!v || 'Vous devez accepter les conditions']"
             required
           ></v-checkbox>
         </v-form>
@@ -103,12 +115,31 @@
       <v-card-actions>
         <v-spacer></v-spacer>
 
-        <v-btn @click="signUp" :disabled="!valid" tonal comfortable block large color="#10a37f" v-if="etat !== 'co'">
-          <span style="color: white;">S'inscrire</span>
+        <v-btn
+          @click="signUp"
+          :disabled="!valid"
+          tonal
+          comfortable
+          block
+          large
+          color="#10a37f"
+          v-if="etat !== 'co'"
+        >
+          <span style="color: white">S'inscrire</span>
           <v-icon icon="mdi-chevron-right" end></v-icon>
         </v-btn>
 
-        <v-btn @click="signIn" :disabled="!valid" style="color: white;" tonal comfortable block large color="#10a37f" v-else>
+        <v-btn
+          @click="signIn"
+          :disabled="!valid"
+          style="color: white"
+          tonal
+          comfortable
+          block
+          large
+          color="#10a37f"
+          v-else
+        >
           Se connecter
           <v-icon icon="mdi-chevron-right" end></v-icon>
         </v-btn>
@@ -116,14 +147,14 @@
 
       <v-alert type="error" v-if="error">{{ error }}</v-alert>
 
-      <br><br>
+      <br /><br />
 
       <a
         class="text-blue text-center text-decoration-none ml-2"
         href="#"
         @click.prevent="changeEtat"
       >
-        {{ etat === 'co' ? "S'inscrire" : "J'ai déjà un compte. Me connecter" }}
+        {{ etat === "co" ? "S'inscrire" : "J'ai déjà un compte. Me connecter" }}
         <v-icon>mdi-chevron-right</v-icon>
       </a>
     </v-card>
@@ -132,7 +163,12 @@
 
 <script>
 import { auth, db } from "@/plugins/firebase";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+} from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 
 export default {
@@ -144,6 +180,7 @@ export default {
     address: null,
     phone: null,
     pays: null,
+    ville: null,
     terms: false,
     loading: false,
     error: null,
@@ -166,7 +203,11 @@ export default {
       this.error = null;
       try {
         // Crée un utilisateur avec Firebase Auth
-        const userCredential = await createUserWithEmailAndPassword(auth, this.email, this.password);
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          this.email,
+          this.password
+        );
         const user = userCredential.user;
 
         // Enregistre les données supplémentaires dans Firestore
@@ -176,6 +217,7 @@ export default {
           address: this.address,
           phone: this.phone,
           pays: this.pays,
+          pays: this.ville,
           createdAt: new Date(),
         });
 
@@ -196,8 +238,15 @@ export default {
       this.error = null;
       try {
         // Connecte l'utilisateur avec Firebase Auth
-        const userCredential = await signInWithEmailAndPassword(auth, this.email, this.password);
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          this.email,
+          this.password
+        );
         const user = userCredential.user;
+
+        // Stocke l'userId dans localStorage
+        localStorage.setItem("userId", user.uid);
 
         // Récupère les données utilisateur depuis Firestore
         const userDoc = await getDoc(doc(db, "users", user.uid));
@@ -220,6 +269,10 @@ export default {
     async logout() {
       try {
         await signOut(auth);
+
+        // Supprime l'userId de localStorage
+        localStorage.removeItem("userId");
+
         this.isLoggedIn = false;
         localStorage.setItem("etat", "deco"); // Met à jour l'état dans localStorage
         this.$router.push("/connexion");
@@ -245,9 +298,9 @@ export default {
 
 <style scoped>
 body {
-  font-family: 'Google Sans', sans-serif !important;
+  font-family: "Google Sans", sans-serif !important;
 }
 h1 {
-  font-family: 'Google Sans', sans-serif !important;
+  font-family: "Google Sans", sans-serif !important;
 }
 </style>

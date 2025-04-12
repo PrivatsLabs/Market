@@ -21,8 +21,8 @@
           <v-icon @click="search">mdi-magnify</v-icon>
           <v-spacer></v-spacer>
           <v-icon id="mdi-account" @click="log">mdi-account</v-icon>
-          <v-avatar v-if="showAvatar" size="25" color="primary" class="white--text font-weight-bold">
-            <span>{{ userInitial }}</span>
+          <v-avatar @click="profil" v-if="showAvatar" size="25" color="primary" class="white--text font-weight-bold">
+            <span class="text-center">{{ userInitial }}</span>
           </v-avatar>
           <v-spacer v-if="cartItemCount > 0"></v-spacer>
 
@@ -94,7 +94,8 @@ export default {
   computed: {
     ...mapGetters({
       isCartOpen: "isCartOpen",
-      cartItemCount: "cartItemCount",
+      cartItems: "cartItems",
+      cartItemCount: "cartItemCount", // Compteur des articles dans le panier
     }),
     userInitial() {
       return this.userPrenom ? this.userPrenom.charAt(0).toUpperCase() : "U";
@@ -113,6 +114,9 @@ export default {
     }
 
     this.etat(); // Appel de la méthode `etat` lors du montage
+
+    // Charger le panier depuis localStorage
+    this.loadCartFromLocalStorage();
   },
   methods: {
     async fetchClientIp() {
@@ -126,6 +130,10 @@ export default {
         return null;
       }
     },
+    profil() {
+        this.$router.push("/profil"); // Redirige vers la page de profil
+     
+    },
     menuO() {
       // Jouer le son à l'ouverture du menu
       const sonOuverture = document.getElementById("son-ouverture");
@@ -136,7 +144,6 @@ export default {
       document.querySelector(".menu").style.width = "80%";
       document.querySelector(".menu").style.padding = "0px";
       document.querySelector(".mdi-close").style.display = "block";
-      // document.querySelector(".deco").style.display="block";
 
       const boxes = document.querySelectorAll(".box");
       boxes.forEach((box) => {
@@ -155,16 +162,15 @@ export default {
     },
     vibrate() {
       if (navigator.vibrate) {
-        navigator.vibrate(50); // Vibration de 200ms
+        navigator.vibrate(50); // Vibration de 50ms
       } else {
         console.warn("La vibration n'est pas supportée sur cet appareil.");
       }
     },
     ...mapActions({
       toggleCart: "toggleCart",
+      loadCart: "loadCart", // Action pour charger le panier depuis Vuex
     }),
-    ...mapActions(["loadCart"]),
-
     search() {
       document.querySelector(".search").style.height = "100%";
       document.querySelector(".search-box").style.display = "block";
@@ -191,6 +197,13 @@ export default {
         accountIcon.style.display = "block";
         this.showAvatar = false; // Cache l'avatar
       }
+    },
+    loadCartFromLocalStorage() {
+      // Charge le panier depuis localStorage et met à jour Vuex
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.forEach(item => {
+        this.$store.commit("addToCart", item); // Ajoute chaque article au store Vuex
+      });
     },
   },
 };

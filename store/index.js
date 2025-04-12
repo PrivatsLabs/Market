@@ -37,6 +37,9 @@ const store = () => new Vuex.Store({
       state.cart = state.cart.filter(item => item.id !== productId);
       localStorage.setItem('cart', JSON.stringify(state.cart));
     },
+    setCartItemCount(state, count) {
+      state.cartItemCount = count; // Ajoute ou met à jour la valeur de cartItemCount
+    },
   },
   actions: {
     toggleCart({ commit }) {

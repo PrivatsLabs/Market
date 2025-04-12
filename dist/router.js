@@ -14,6 +14,7 @@ const _6883f5ab = () => interopDefault(import('..\\pages\\iphone.vue' /* webpack
 const _5f892222 = () => interopDefault(import('..\\pages\\montres.vue' /* webpackChunkName: "pages/montres" */))
 const _656d5860 = () => interopDefault(import('..\\pages\\paiment.vue' /* webpackChunkName: "pages/paiment" */))
 const _64f83cf9 = () => interopDefault(import('..\\pages\\pc.vue' /* webpackChunkName: "pages/pc" */))
+const _31f979c2 = () => interopDefault(import('..\\pages\\profil.vue' /* webpackChunkName: "pages/profil" */))
 const _047f3d57 = () => interopDefault(import('..\\pages\\redmi.vue' /* webpackChunkName: "pages/redmi" */))
 const _3220bc64 = () => interopDefault(import('..\\pages\\samsung.vue' /* webpackChunkName: "pages/samsung" */))
 const _6624aeae = () => interopDefault(import('..\\pages\\settings.vue' /* webpackChunkName: "pages/settings" */))
@@ -74,6 +75,10 @@ export const routerOptions = {
     path: "/pc",
     component: _64f83cf9,
     name: "pc"
+  }, {
+    path: "/profil",
+    component: _31f979c2,
+    name: "profil"
   }, {
     path: "/redmi",
     component: _047f3d57,
