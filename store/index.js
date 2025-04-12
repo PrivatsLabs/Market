@@ -7,6 +7,7 @@ const store = () => new Vuex.Store({
   state: {
     isCartOpen: false,
     cart: [],
+    cartItemCount: 0, // Ajout pour suivre le compteur d'articles
   },
   mutations: {
     toggleCart(state) {
@@ -21,10 +22,11 @@ const store = () => new Vuex.Store({
     addToCart(state, product) {
       const item = state.cart.find(item => item.id === product.id);
       if (item) {
-        alert("Déjà ajouté au panier"); // Retour à une alerte simple
+        alert("Déjà ajouté au panier");
       } else {
-        state.cart.push({ ...product });
+        state.cart.push({ ...product, quantity: 1 }); // Ajout de la quantité par défaut
         localStorage.setItem('cart', JSON.stringify(state.cart));
+        state.cartItemCount++; // Incrémente le compteur
       }
     },
     loadCart(state) {
@@ -38,7 +40,7 @@ const store = () => new Vuex.Store({
       localStorage.setItem('cart', JSON.stringify(state.cart));
     },
     setCartItemCount(state, count) {
-      state.cartItemCount = count; // Ajoute ou met à jour la valeur de cartItemCount
+      state.cartItemCount = count; // Met à jour le compteur d'articles
     },
   },
   actions: {

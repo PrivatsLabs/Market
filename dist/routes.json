@@ -96,13 +96,6 @@
     "_name": "_31f979c2"
   },
   {
-    "name": "profil",
-    "path": "/profil",
-    "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\profil.vue",
-    "chunkName": "pages/profil",
-    "url": "/profil"
-  },
-  {
     "name": "redmi",
     "path": "/redmi",
     "component": "C:\\\\Users\\\\Huawei\\\\Desktop\\\\Market\\\\pages\\\\redmi.vue",
