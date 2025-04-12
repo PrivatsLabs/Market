@@ -312,6 +312,26 @@ export default {
         console.error("Erreur lors de la récupération de l'adresse IP :", error);
       }
     },
+    async prefillDeliveryDetails() {
+      try {
+        const userId = localStorage.getItem("userId"); // Récupère l'ID utilisateur depuis localStorage
+        if (!userId) return;
+
+        const userDoc = await getDoc(doc(db, "users", userId));
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          this.form.nom = userData.nom || "";
+          this.form.telephone = userData.phone || "";
+          this.form.ville = userData.ville || "";
+          this.form.adresse = userData.address || "";
+          this.showForm = false; // Cache le formulaire si les données sont pré-remplies
+        } else {
+          console.warn("Les données utilisateur sont introuvables.");
+        }
+      } catch (error) {
+        console.error("Erreur lors du pré-remplissage des détails de livraison :", error);
+      }
+    },
     async envoyerMessageTelegram() {
       // Vérifiez si tous les champs sont remplis et ne contiennent pas uniquement des espaces
       if (
@@ -388,6 +408,10 @@ ${this.cartItems
 
         console.log("Commande envoyée avec succès !");
         this.$toast.success("Commande envoyée avec succès !");
+        
+        // Enregistrer la commande dans Firebase
+        await this.saveOrderToFirebase();
+
         this.$router.push("/ticket");
         localStorage.removeItem("cart");
         this.$store.commit("clearCart");
@@ -395,6 +419,30 @@ ${this.cartItems
         console.error("Erreur lors de l'envoi du message Telegram :", error);
         this.$toast.error(
           "Une erreur réseau est survenue lors de l'envoi de la commande."
+        );
+      }
+    },
+    async saveOrderToFirebase() {
+      try {
+        const orderData = {
+          nom: this.form.nom,
+          telephone: this.form.telephone,
+          ville: this.form.ville,
+          adresse: this.form.adresse,
+          panier: this.cartItems,
+          total: this.cartItems.reduce(
+            (sum, item) => sum + item.prix * (item.quantity || 1),
+            0
+          ),
+          timestamp: new Date(),
+        };
+
+        await addDoc(collection(db, "orders"), orderData);
+        console.log("Commande enregistrée dans Firebase avec succès !");
+      } catch (error) {
+        console.error("Erreur lors de l'enregistrement de la commande :", error);
+        this.$toast.error(
+          "Une erreur est survenue lors de l'enregistrement de la commande."
         );
       }
     },

@@ -11,15 +11,11 @@
 
     <nuxt-link to="/aide">Centre d'aide</nuxt-link> <br />
     <br />
-    <span>Nous contacter</span> <br />
+    <nuxt-link to="/about">A propos de nous</nuxt-link> <br />
     <br />
-    <span>A propos de nous</span> <br />
+    <nuxt-link to="/confidentialite">Confidentialité</nuxt-link> <br />
     <br />
-    <span>Polique</span> <br />
-    <br />
-    <span>Confidentialite</span> <br />
-    <br />
-    <span>Cookies</span> <br />
+    <nuxt-link to="/cookies">Cookies</nuxt-link> <br />
     <br />
 
     <v-divider></v-divider>
@@ -91,10 +87,8 @@ footer {
   text-decoration: none;
 }
 
-a{
+a {
   color: grey;
   text-align: center;
 }
-
-
 </style>
