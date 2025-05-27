@@ -202,7 +202,12 @@ export default {
       // Charge le panier depuis localStorage et met à jour Vuex
       const cart = JSON.parse(localStorage.getItem("cart")) || [];
       cart.forEach(item => {
-        this.$store.commit("addToCart", item); // Ajoute chaque article au store Vuex
+        // S'assure que la quantité est bien définie (par défaut à 1)
+        const itemWithQuantity = {
+          ...item,
+          quantity: item.quantity ? item.quantity : 1
+        };
+        this.$store.commit("addToCart", itemWithQuantity);
       });
     },
   },

@@ -116,7 +116,7 @@
       <div class="methode-box">
         <p>MODE DE PAIEMENT</p>
         <div class="d-flex justify-space-between align-center">
-          <v-radio-group>
+          <v-radio-group v-model="selectedPayment" :rules="[rules.required]" required>
             <v-radio
               label="A la livraison - main à main"
               value="A la livraison - main à main"
@@ -207,6 +207,7 @@ export default {
       },
       honeypot: "", // Champ honeypot pour détecter les bots
       clientIp: "", // Stocke l'adresse IP du client
+      selectedPayment: "", // Ajout du mode de paiement sélectionné
       rules: {
         required: (value) => !!value || "Ce champ est requis.",
         minLength: (min) => (value) =>
@@ -333,6 +334,12 @@ export default {
       }
     },
     async envoyerMessageTelegram() {
+      // Vérifie que le mode de paiement est sélectionné
+      if (!this.selectedPayment) {
+        this.$toast.error("Veuillez sélectionner un mode de paiement.");
+        return;
+      }
+
       // Vérifiez si tous les champs sont remplis et ne contiennent pas uniquement des espaces
       if (
         !this.form.nom?.trim() ||
@@ -369,6 +376,7 @@ export default {
 📞 *Téléphone* : ${this.form.telephone}
 📍 *Ville* : ${this.form.ville}
 🏠 *Adresse* : ${this.form.adresse}
+💳 *Mode de paiement* : ${this.selectedPayment}
 
 🛒 *Détails du panier* :
 ${this.cartItems

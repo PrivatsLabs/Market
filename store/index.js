@@ -24,7 +24,8 @@ const store = () => new Vuex.Store({
       if (item) {
         alert("Déjà ajouté au panier");
       } else {
-        state.cart.push({ ...product, quantity: 1 }); // Ajout de la quantité par défaut
+        // Utilise la quantité fournie si elle existe, sinon 1
+        state.cart.push({ ...product, quantity: product.quantity !== undefined ? product.quantity : 1 });
         localStorage.setItem('cart', JSON.stringify(state.cart));
         state.cartItemCount++; // Incrémente le compteur
       }

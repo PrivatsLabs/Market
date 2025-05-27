@@ -93,14 +93,16 @@ export default {
     }
     ,
     changeQuantity(item) {
-      // Trouver l'index de l'article dans cartItems
-      const index = this.cartItems.findIndex(cartItem => cartItem.id === item.id);
+      // Met à jour la quantité dans le store ET dans le localStorage
+      this.updateCartItem({ id: item.id, quantity: item.quantity });
 
-      // Mettre à jour la quantité de l'article dans cartItems
-      this.cartItems[index].quantity = item.quantity;
-
-      // Mettre à jour localStorage avec la nouvelle valeur de cartItems
-      localStorage.setItem('cart', JSON.stringify(this.cartItems));
+      // Met à jour aussi le localStorage directement pour garantir la synchro
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const index = cart.findIndex(cartItem => cartItem.id === item.id);
+      if (index !== -1) {
+        cart[index].quantity = item.quantity;
+        localStorage.setItem('cart', JSON.stringify(cart));
+      }
     },
     menuO() {
       document.querySelector('.menu').style.width = '95%';
