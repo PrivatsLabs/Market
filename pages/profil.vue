@@ -72,7 +72,7 @@
         </v-col>
       </v-row>
 
-      <br />
+
 
       <!-- Section Commandes -->
       <v-row justify="center">
@@ -86,14 +86,13 @@
               </div>
               <div v-else>
                 <div
-                  class="card elevation-1 mb-4"
+                  class="card elevation-0 mb-4"
                   v-for="order in orders"
                   :key="order.id"
                   style="padding: 10px;"
                 >
                   <div>
                   
-                    <br />
                     <span class="text-caption">
                       <strong>Date :</strong>
                       {{ order.timestamp && order.timestamp.seconds
@@ -108,6 +107,7 @@
                       <span class="text-body-1">{{ item.name }}</span><br />
                       <span class="text-body-2">{{ item.details }}</span><br />
                       <span class="text-body-1 font-weight-bold">{{ item.prix }} FCFA</span>
+                      <span class="text-body-1 font-weight-bold">{{ item.quantity }}</span>
                     </div>
                   </div>
                 </div>
@@ -151,6 +151,7 @@ export default {
         phone: "",
         address: "",
         pays: "",
+        edit: "no",
       },
       orders: [], // Liste des commandes de l'utilisateur
     };
