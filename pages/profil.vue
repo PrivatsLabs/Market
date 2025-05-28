@@ -67,6 +67,7 @@
             <v-btn block color="primary" @click="editProfile">
               <v-icon left>mdi-pencil</v-icon> Modifier le profil
             </v-btn>
+            <br>
           </v-card>
         </v-col>
       </v-row>
@@ -80,23 +81,37 @@
             <v-card-title>Mes Commandes</v-card-title>
             <v-divider></v-divider>
             <v-card-text>
-              <v-list dense>
-                <v-list-item v-for="order in orders" :key="order.id">
-                  <v-list-item-content>
-                    <v-list-item-title>
-                      <strong>Commande #{{ order.id }}</strong>
-                    </v-list-item-title>
-                    <v-list-item-subtitle>
-                      <strong>Total :</strong> {{ order.total }} FCFA
-                      <br />
-                      <strong>Date :</strong> {{ new Date(order.timestamp.seconds * 1000).toLocaleString() }}
-                    </v-list-item-subtitle>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
-              <p v-if="orders.length === 0" class="text-muted text-center">
+              <div v-if="orders.length === 0" class="text-muted text-center">
                 Vous n'avez pas encore passé de commande.
-              </p>
+              </div>
+              <div v-else>
+                <div
+                  class="card elevation-1 mb-4"
+                  v-for="order in orders"
+                  :key="order.id"
+                  style="padding: 10px;"
+                >
+                  <div>
+                  
+                    <br />
+                    <span class="text-caption">
+                      <strong>Date :</strong>
+                      {{ order.timestamp && order.timestamp.seconds
+                        ? new Date(order.timestamp.seconds * 1000).toLocaleString()
+                        : '' }}
+                    </span>
+                  </div>
+                  <v-divider class="my-2"></v-divider>
+                  <div v-for="item in order.produits" :key="item.name" class="d-flex align-center mb-2">
+                    <img :src="item.url" style="width: 60px; height: 60px; object-fit: cover; border-radius: 5px; margin-right: 10px;" />
+                    <div class="infos">
+                      <span class="text-body-1">{{ item.name }}</span><br />
+                      <span class="text-body-2">{{ item.details }}</span><br />
+                      <span class="text-body-1 font-weight-bold">{{ item.prix }} FCFA</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </v-card-text>
           </v-card>
         </v-col>
@@ -148,18 +163,35 @@ export default {
   methods: {
     async fetchUserOrders() {
       try {
-        const userId = localStorage.getItem("userId"); // Récupère l'ID utilisateur depuis localStorage
+        // Récupère l'ID utilisateur depuis le localStorage
+        const userId = localStorage.getItem("userId");
         if (!userId) {
           console.warn("Aucun userId trouvé dans localStorage.");
+          this.orders = [];
           return;
         }
 
-        const ordersQuery = query(collection(db, "orders"), where("userId", "==", userId));
-        const querySnapshot = await getDocs(ordersQuery);
-        this.orders = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
+        // Boucle sur tous les documents de la collection "orders"+userId
+        const ordersCollection = collection(db, "orders" + userId);
+        const querySnapshot = await getDocs(ordersCollection);
+        this.orders = querySnapshot.docs.map((doc) => {
+          const data = doc.data();
+          const produits = (data.panier || []).map(item => ({
+            name: item.name,
+            url: item.url,
+            details: item.details,
+            prix: item.prix
+          }));
+          return {
+            id: doc.id,
+            produits,
+            total: data.total,
+            timestamp: data.timestamp
+          };
+        });
+
+        // Met à jour le localStorage avec les commandes récupérées
+        localStorage.setItem("orders", JSON.stringify(this.orders));
       } catch (error) {
         console.error("Erreur lors de la récupération des commandes :", error);
       }
@@ -196,6 +228,15 @@ export default {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         this.fetchUserData(); // Appel de fetchUserData lors du montage
+        // Affiche les commandes depuis le localStorage si déjà présentes
+        const ordersLS = localStorage.getItem("orders");
+        if (ordersLS) {
+          try {
+            this.orders = JSON.parse(ordersLS);
+          } catch {
+            this.orders = [];
+          }
+        }
       } else {
         this.$router.push("/connexion");
       }

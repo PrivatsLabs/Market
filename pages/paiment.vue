@@ -188,7 +188,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import { db } from "@/firebase";
-import { collection, addDoc, getDoc, doc } from "firebase/firestore";
+import { collection, addDoc, getDoc, doc, setDoc } from "firebase/firestore";
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 
@@ -354,13 +354,20 @@ export default {
         return;
       }
 
-      const botToken = process.env.TELEGRAM_BOT_TOKEN || "default_bot_token";
-      const chatId = process.env.TELEGRAM_CHAT_ID || "default_chat_id";
+      // const botToken = process.env.TELEGRAM_BOT_TOKEN || "default_bot_token";
+      // const chatId = process.env.TELEGRAM_CHAT_ID || "default_chat_id";
 
+      // Pour Nuxt, les variables d'environnement doivent être préfixées par NUXT_ dans le .env
+      // et accessibles via process.env.NUXT_TELEGRAM_BOT_TOKEN côté client
+      const botToken = process.env.TELEGRAM_BOT_TOKEN;
+      const chatId = process.env.TELEGRAM_CHAT_ID;
+
+      // Debug : affiche les valeurs utilisées
       console.log("Debugging Telegram Config:", { botToken, chatId });
-      if (botToken === "default_bot_token" || chatId === "default_chat_id") {
+
+      if (!botToken || !chatId) {
         console.error(
-          "Les variables d'environnement par défaut sont utilisées. Assurez-vous que le fichier .env est correctement configuré et que les variables TELEGRAM_BOT_TOKEN et TELEGRAM_CHAT_ID sont définies."
+          "Les variables d'environnement NUXT_TELEGRAM_BOT_TOKEN et NUXT_TELEGRAM_CHAT_ID sont manquantes ou non chargées. Vérifiez votre .env et redémarrez Nuxt."
         );
         this.$toast.error(
           "Erreur de configuration : les identifiants Telegram sont manquants ou incorrects."
@@ -368,7 +375,7 @@ export default {
         return;
       }
 
-      const message = `
+      let message = `
 🛍️ *Nouvelle commande reçue !*
 🌐 *Adresse IP* : ${this.clientIp}
 
@@ -386,6 +393,11 @@ ${this.cartItems
 ✅ Merci pour votre commande !
 `;
 
+      // Telegram limite à 4096 caractères
+      if (message.length > 4000) {
+        message = message.substring(0, 3990) + "\n[Message tronqué]";
+      }
+
       try {
         const response = await fetch(
           `https://api.telegram.org/bot${botToken}/sendMessage`,
@@ -400,16 +412,44 @@ ${this.cartItems
           }
         );
 
+        const responseText = await response.text();
+        console.log("Telegram API response:", responseText);
+
         if (!response.ok) {
-          const errorData = await response.json();
+          let errorData;
+          try {
+            errorData = JSON.parse(responseText);
+          } catch {
+            errorData = { description: responseText };
+          }
+          // Affiche une erreur claire pour "chat not found"
+          if (
+            errorData.description &&
+            errorData.description.includes("chat not found")
+          ) {
+            this.$toast.error(
+              "Erreur Telegram : chat_id incorrect ou le bot n'a pas démarré la conversation avec ce compte. Démarrez une conversation avec votre bot sur Telegram ou vérifiez le chat_id."
+            );
+          } else {
+            this.$toast.error(
+              `Erreur Telegram : ${
+                errorData.description || "Une erreur est survenue."
+              }`
+            );
+          }
           console.error(
             "Erreur lors de l'envoi du message Telegram :",
             errorData
           );
+          return;
+        }
+
+        // Vérifie la réponse Telegram (doit contenir ok: true)
+        const data = JSON.parse(responseText);
+        if (!data.ok) {
+          console.error("Réponse Telegram non OK :", data);
           this.$toast.error(
-            `Erreur Telegram : ${
-              errorData.description || "Une erreur est survenue."
-            }`
+            `Erreur Telegram : ${data.description || "Réponse non OK"}`
           );
           return;
         }
@@ -432,6 +472,7 @@ ${this.cartItems
     },
     async saveOrderToFirebase() {
       try {
+        const userId = localStorage.getItem("userId");
         const orderData = {
           nom: this.form.nom,
           telephone: this.form.telephone,
@@ -443,9 +484,16 @@ ${this.cartItems
             0
           ),
           timestamp: new Date(),
+          userId: userId || null, // Ajoute le userId dans la commande
         };
 
-        await addDoc(collection(db, "orders"), orderData);
+        if (userId) {
+          // Utilise "orders"+userId comme nom de collection et génère un id auto pour le doc
+          await addDoc(collection(db, "orders" + userId), orderData);
+        } else {
+          // Si pas de userId, fallback sur addDoc
+          await addDoc(collection(db, "orders"), orderData);
+        }
         console.log("Commande enregistrée dans Firebase avec succès !");
       } catch (error) {
         console.error("Erreur lors de l'enregistrement de la commande :", error);

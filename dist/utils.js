@@ -202,7 +202,7 @@ export async function setContext (app, context) {
       payload: context.payload,
       error: context.error,
       base: app.router.options.base,
-      env: {"TELEGRAM_BOT_TOKEN":"7881956902:AAHV4ei_G6A9j-YtVpMk2quaLDrwAoeKtD0","TELEGRAM_CHAT_ID":"7332838769"}
+      env: {"TELEGRAM_BOT_TOKEN":"7891991084:AAFA6i7V2qk8D66sG9q4wvYL6ar1ZAmMCrY","TELEGRAM_CHAT_ID":"8188283932"}
     }
     // Only set once
 
