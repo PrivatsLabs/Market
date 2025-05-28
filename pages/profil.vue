@@ -31,7 +31,7 @@
       <br />
 
       <!-- Section Informations -->
-      <v-row justify="center">
+      <v-row v-if="edit=='no'" justify="center">
         <v-col cols="12" md="8">
           <v-card elevation="1" class="info-card">
             <v-card-title>Informations personnelles</v-card-title>
@@ -72,7 +72,50 @@
         </v-col>
       </v-row>
 
-
+      <!-- Section Edition Profil -->
+      <div v-else class="livraison-box">
+        <p>MODIFIER LE PROFIL</p>
+        <form @submit.prevent="enregistrer">
+          <v-text-field
+            v-model="form.nom"
+            label="Nom complet"
+            :rules="[rules.required, rules.minLength(2), rules.maxLength(40)]"
+            required
+            clearable
+          ></v-text-field>
+          <v-text-field
+            v-model="form.telephone"
+            label="Numéro de téléphone"
+            type="tel"
+            :rules="[rules.required, rules.phone]"
+            required
+            clearable
+          ></v-text-field>
+          <v-text-field
+            v-model="form.pays"
+            label="Pays"
+            :rules="[rules.required]"
+            clearable
+          ></v-text-field>
+          <v-text-field
+            v-model="form.ville"
+            label="Ville"
+            :rules="[rules.required]"
+            clearable
+          ></v-text-field>
+          <v-text-field
+            v-model="form.adresse"
+            label="Adresse"
+            :rules="[rules.required]"
+            clearable
+          ></v-text-field>
+          <br />
+          <v-divider></v-divider>
+          <br />
+          <v-btn outlined block color="blue" type="submit">Enregistrer</v-btn>
+          <v-btn outlined block color="grey" @click="edit='no'">Annuler</v-btn>
+        </form>
+      </div>
 
       <!-- Section Commandes -->
       <v-row justify="center">
@@ -140,7 +183,7 @@
 <script>
 import { auth, db } from "@/plugins/firebase";
 import { signOut, onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc, collection, getDocs, query, where } from "firebase/firestore";
+import { doc, getDoc, collection, getDocs, query, where, setDoc } from "firebase/firestore";
 
 export default {
   data() {
@@ -151,9 +194,27 @@ export default {
         phone: "",
         address: "",
         pays: "",
-        edit: "no",
       },
-      orders: [], // Liste des commandes de l'utilisateur
+      orders: [],
+      edit: "no",
+      form: {
+        nom: "",
+        telephone: "",
+        pays: "",
+        ville: "",
+        adresse: "",
+      },
+      honeypot: "",
+      rules: {
+        required: (value) => !!value || "Ce champ est requis.",
+        minLength: (min) => (value) =>
+          (value && value.length >= min) || `Minimum ${min} caractères requis.`,
+        maxLength: (max) => (value) =>
+          (value && value.length <= max) ||
+          `Maximum ${max} caractères autorisés.`,
+        phone: (value) =>
+          /^[0-9]{8,18}$/.test(value) || "Le numéro doit être valide.",
+      },
     };
   },
   computed: {
@@ -210,7 +271,54 @@ export default {
       }
     },
     editProfile() {
-      this.$toast.info("La fonctionnalité de modification est en cours de développement !");
+      this.edit = "yes";
+      // Pré-remplit le formulaire avec les infos actuelles
+      this.form.nom = this.user.nom || "";
+      this.form.telephone = this.user.phone || "";
+      this.form.pays = this.user.pays || "";
+      this.form.ville = this.user.ville || "";
+      this.form.adresse = this.user.address || "";
+    },
+    async enregistrer() {
+      if (
+        !this.form.nom?.trim() ||
+        !this.form.telephone?.trim() ||
+        !this.form.pays?.trim() ||
+        !this.form.ville?.trim() ||
+        !this.form.adresse?.trim()
+      ) {
+        this.$toast && this.$toast.error
+          ? this.$toast.error("Veuillez remplir tous les champs.")
+          : alert("Veuillez remplir tous les champs.");
+        return;
+      }
+      try {
+        const user = auth.currentUser;
+        if (user) {
+          await setDoc(doc(db, "users", user.uid), {
+            nom: this.form.nom,
+            phone: this.form.telephone,
+            pays: this.form.pays,
+            ville: this.form.ville,
+            address: this.form.adresse,
+            email: this.user.email,
+          });
+          this.user.nom = this.form.nom;
+          this.user.phone = this.form.telephone;
+          this.user.pays = this.form.pays;
+          this.user.ville = this.form.ville;
+          this.user.address = this.form.adresse;
+          this.edit = "no";
+          this.$toast && this.$toast.success
+            ? this.$toast.success("Profil mis à jour !")
+            : alert("Profil mis à jour !");
+        }
+      } catch (error) {
+        console.error("Erreur lors de la mise à jour du profil :", error);
+        this.$toast && this.$toast.error
+          ? this.$toast.error("Erreur lors de la mise à jour du profil.")
+          : alert("Erreur lors de la mise à jour du profil.");
+      }
     },
     async logout() {
       try {
