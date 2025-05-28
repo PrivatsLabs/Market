@@ -120,7 +120,7 @@
       <!-- Section Commandes -->
       <v-row justify="center">
         <v-col cols="12" md="8">
-          <v-card elevation="1" class="orders-card">
+          <v-card elevation="0" class="orders-card">
             <v-card-title>Mes Commandes</v-card-title>
             <v-divider></v-divider>
             <v-card-text>
@@ -128,38 +128,45 @@
                 Vous n'avez pas encore passé de commande.
               </div>
               <div v-else>
-                <div
-                  class="card elevation-0 mb-4"
-                  v-for="order in orders"
-                  :key="order.id"
-                  style="padding: 10px;"
-                >
-                  <div>
-                  
-                    <span class="text-caption">
-                      <strong>Date :</strong>
-                      {{ order.timestamp && order.timestamp.seconds
-                        ? new Date(order.timestamp.seconds * 1000).toLocaleString()
-                        : '' }}
-                    </span>
-                  </div>
-                  <v-divider class="my-2"></v-divider>
-                  <div v-for="item in order.produits" :key="item.name" class="d-flex align-center mb-2">
-                    <img :src="item.url" style="width: 60px; height: 60px; object-fit: cover; border-radius: 5px; margin-right: 10px;" />
-                    <div class="infos">
-                      <span class="text-body-1">{{ item.name }}</span><br />
-                      <span class="text-body-2">{{ item.details }}</span><br />
-                      <span class="text-body-1 font-weight-bold">{{ item.prix }} FCFA</span>
-                      <span class="text-body-1 font-weight-bold">{{ item.quantity }}</span>
-                    </div>
-                  </div>
+                <div style="max-height: 450px; overflow-y: auto; padding-right: 8px; width: 100%;">
+                  <br>
+                  <v-expansion-panels multiple>
+                    <v-expansion-panel
+                      v-for="order in orders"
+                      :key="order.id"
+                      class="mb-2"
+                    >
+                      <v-expansion-panel-title>
+                        <div class="d-flex flex-column" style="width: 100%;">
+                          <span>
+                            <strong>Date :</strong>
+                            {{ order.timestamp && order.timestamp.seconds
+                              ? new Date(order.timestamp.seconds * 1000).toLocaleString()
+                              : '' }}
+                          </span>
+
+                        </div>
+                      </v-expansion-panel-title>
+                      <v-expansion-panel-text>
+                        <div v-for="item in order.produits" :key="item.name" class="d-flex align-center mb-2 pt-2">
+                          <img :src="item.url" style="width: 60px; height: 60px; object-fit: cover; border-radius: 5px; margin-right: 10px;" />
+                          <div class="infos">
+                            <span class="text-body-1">{{ item.name }}</span><br />
+                            <span class="text-body-2">{{ item.details }}</span><br />
+                            <span class="text-body-1 font-weight-bold">{{ item.prix }} FCFA</span> <br>
+                            <span class="text-body-1 font-weight-bold">Quantité: {{ item.quantity }}</span>
+                          </div>
+                        </div>
+                      </v-expansion-panel-text>
+                    </v-expansion-panel>
+                  </v-expansion-panels>
+                  <br>
                 </div>
               </div>
             </v-card-text>
           </v-card>
         </v-col>
       </v-row>
-
       <br />
 
       <!-- Section Actions -->
@@ -242,7 +249,8 @@ export default {
             name: item.name,
             url: item.url,
             details: item.details,
-            prix: item.prix
+            prix: item.prix,
+            quantity: item.quantity || 1, // Assure que quantity est défini
           }));
           return {
             id: doc.id,

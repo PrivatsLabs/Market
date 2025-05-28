@@ -6,7 +6,7 @@ export default ({ app }, inject) => {
   if (process.client) {
     Vue.use(Toast, {
       // Options de configuration (facultatif)
-      timeout: 3000,
+      timeout: 2000,
       position: "top-right",
     });
 
