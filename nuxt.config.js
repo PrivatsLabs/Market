@@ -188,7 +188,7 @@ export default {
 
   render: {
     static: {
-      cacheControl: false
+      cacheControl: true,
     }
   },
 
